@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>登录界面</title>
+    <link th:href="@{/layui-v2.4.5/layui/css/layui.css}" rel="stylesheet"/>
+</head>
+<body class="layui-bg-gray">
+
+<div class="layui-layer-content" style="z-index: 19891015; width: 500px; top: 227px; left: 35%;">
+    <div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #e2e2e2; font-weight: 300;">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title">
+                <li class="layui-this">
+                    <h1>登录</h1>
+                </li>
+                <li>
+                    <h1><a href="/register">注册</a></h1>
+                </li>
+            </ul>
+        </div>
+        <from class="layui-form" action="/addUser">
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 100%">
+                    <input type="text" name="username" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+                <!-- 对号 -->
+                <div class="layui-inline">
+                    <i class="layui-icon" id="ri" style="color: green;font-weight: bolder;" hidden></i>
+                </div>
+                <!-- 错号 -->
+                <div class="layui-inline">
+                    <i class="layui-icon" id="wr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-inline" style="width: 100%">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+                <!-- 对号 -->
+                <div class="layui-inline">
+                    <i class="layui-icon" id="pri" style="color: green;font-weight: bolder;" hidden></i>
+                </div>
+                <!-- 错号 -->
+                <div class="layui-inline">
+                    <i class="layui-icon" id="pwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>
+                </div>
+            </div>
+
+            <!-- 确认密码 -->
+            <!--<div class="layui-form-item">-->
+                <!--<div class="layui-input-inline" style="width: 100%">-->
+                    <!--<input type="password" id="rpwd" name="repassword" required  lay-verify="required" placeholder="请确认密码" autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <!--&lt;!&ndash; 对号 &ndash;&gt;-->
+                <!--<div class="layui-inline">-->
+                    <!--<i class="layui-icon" id="rpri" style="color: green;font-weight: bolder;" hidden></i>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; 错号 &ndash;&gt;-->
+                <!--<div class="layui-inline">-->
+                    <!--<i class="layui-icon" id="rpwr" style="color: red; font-weight: bolder;" hidden>ဆ</i>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <input type="radio" name="admin" value="用户" title="用户">
+                    <input type="radio" name="admin" value="管理员" title="管理员">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+            <br>
+            <div class="layui-form-item fly-form-app">
+                <span>或者使用社交账号登入</span>
+                <a href="/app/qq" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
+                <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
+            </div>
+        </from>
+    </div>
+
+</div>
+
+
+</body>
+<script th:src="@{/layui-v2.4.5/layui/layui.js}"></script>
+<script th:src="@{/jquery-3.2.1/jquery-3.2.1.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','jquery','layui'], function () {
+        var form  = layui.form;
+        var $     = layui.jquery;
+        var layer = layui.layer;
+        //添加表单失焦事件
+        //验证表单
+        $('user').blur(function () {
+            var user = $(this).val()
+
+            // alert(user);
+            // $.ajax({
+            //     url:
+            // })
+        });
+
+        //为密码添加正则验证
+        $('#pwd').blur(function () {
+            var reg = /^[\w]{6,12}$/;
+            if (!($('#pwd').val().match(reg))){
+                //layer.msg('请输入合法密码');
+                $('#pwr').removeAttr('hidden');
+                $('#pri').attr('hidden','hidden');
+                layer.msg('请输入合法密码');
+            }else {
+                $('#pri').removeAttr('hidden');
+                $('#pwr').attr('hidden','hidden');
+            }
+        });
+
+        //验证两次密码是否一致
+        $('#rpwd').blur(function() {
+            if($('#pwd').val() != $('#rpwd').val()){
+                $('#rpwr').removeAttr('hidden');
+                $('#rpri').attr('hidden','hidden');
+                layer.msg('两次输入密码不一致!');
+            }else {
+                $('#rpri').removeAttr('hidden');
+                $('#rpwr').attr('hidden','hidden');
+            };
+        });
+
+        form.render();//更新全部
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            layer.msg(JSON.stringify(data.field));
+            console.log(data.field);
+            $.ajax({
+              method:"post",
+              url:'/addUser',
+              data: JSON.stringify(data.field),
+              dataType: 'JSON',
+              success:function (res) {
+                    // if (res.ResponseCode=="200"){
+                    //    layer.msg('注册成功！');
+                    // } if (res.result == "error") {
+                    //     layer.msg('注册失败！');
+                    // }
+                    // layer.closeAll('if')
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</html>
