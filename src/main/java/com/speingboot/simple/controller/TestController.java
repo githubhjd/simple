@@ -32,9 +32,15 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/api")
-    public ModelAndView api(){
-        ModelAndView modelAndView = new ModelAndView("api");
+    @RequestMapping("/index")
+    public ModelAndView index(){
+        ModelAndView modelAndView = new ModelAndView("index");
+        return modelAndView;
+    }
+
+    @RequestMapping("/404")
+    public ModelAndView My404(){
+        ModelAndView modelAndView = new ModelAndView("404");
         return modelAndView;
     }
 }
