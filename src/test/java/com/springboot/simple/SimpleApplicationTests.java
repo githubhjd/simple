@@ -1,4 +1,4 @@
-package com.speingboot.simple;
+package com.springboot.simple;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

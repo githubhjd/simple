@@ -45,7 +45,8 @@ layui.use(['form','element','layer','jquery'],function(){
         fillParameter(systemParameter);
     }else{
         $.ajax({
-            url : "../json/systemParameter.json",
+            // url : "../json/systemParameter.json",
+            url : "/layuicms2.0/json/systemParameter.json",
             type : "get",
             dataType : "json",
             success : function(data){
@@ -73,7 +74,8 @@ layui.use(['form','element','layer','jquery'],function(){
     }
 
     //最新文章列表
-    $.get("../json/newsList.json",function(data){
+    // $.get("../json/newsList.json",function(data){
+    $.get("/layuicms2.0/json/newsList.json",function(data){
         var hotNewsHtml = '';
         for(var i=0;i<5;i++){
             hotNewsHtml += '<tr>'
@@ -86,7 +88,8 @@ layui.use(['form','element','layer','jquery'],function(){
     })
 
     //用户数量
-    $.get("../json/userList.json",function(data){
+    // $.get("../json/userList.json",function(data){
+    $.get("/layuicms2.0/json/userList.json",function(data){
         $(".userAll span").text(data.count);
     })
 
