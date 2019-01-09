@@ -31,8 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()//X-Frame-Options deny，解决浏览器拒绝iframe
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error")
+//                .loginPage("/login")
+//                .failureUrl("/login?error")
                 .permitAll() //登录界面用户任意访问
                 .and()
                 .logout().permitAll();//注销行为任意访问

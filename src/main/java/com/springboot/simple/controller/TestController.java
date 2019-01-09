@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 public class TestController {
 
@@ -177,6 +175,146 @@ public class TestController {
     @RequestMapping("/page/user/userList")
     public ModelAndView pageUserUserList(){
         ModelAndView modelAndView = new ModelAndView("/page/user/userList");
+        return modelAndView;
+    }
+
+    //fly-3.0社区网页
+
+    @RequestMapping("/html/catalog")
+    public ModelAndView htmlCatalog(){
+        ModelAndView modelAndView = new ModelAndView("/html/catalog");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/index")
+    public ModelAndView htmlIndex(){
+        ModelAndView modelAndView = new ModelAndView("/html/index");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/case/case")
+    public ModelAndView htmlCaseCase(){
+        ModelAndView modelAndView = new ModelAndView("/html/case/case");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/common/common")
+    public ModelAndView htmlCommonCommon(){
+        ModelAndView modelAndView = new ModelAndView("/html/common/common");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/common/filter")
+    public ModelAndView htmlCommonFilter(){
+        ModelAndView modelAndView = new ModelAndView("/html/common/filter");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/common/footer")
+    public ModelAndView htmlCommonFooter(){
+        ModelAndView modelAndView = new ModelAndView("/html/common/footer");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/common/header")
+    public ModelAndView htmlCommonHeader(){
+        ModelAndView modelAndView = new ModelAndView("/html/common/header");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/common/link")
+    public ModelAndView htmlCommonLink(){
+        ModelAndView modelAndView = new ModelAndView("/html/common/link");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/common/user-nav")
+    public ModelAndView htmlCommonUserNav(){
+        ModelAndView modelAndView = new ModelAndView("/html/common/user-nav");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/jie/add")
+    public ModelAndView htmlJieAdd(){
+        ModelAndView modelAndView = new ModelAndView("/html/jie/add");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/jie/detail")
+    public ModelAndView htmlJieDetail(){
+        ModelAndView modelAndView = new ModelAndView("/html/jie/detail");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/jie/index")
+    public ModelAndView htmlJieIndex(){
+        ModelAndView modelAndView = new ModelAndView("/html/jie/index");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/other/404")
+    public ModelAndView htmlOther404(){
+        ModelAndView modelAndView = new ModelAndView("/html/other/404");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/other/notice")
+    public ModelAndView htmlOtherNotice(){
+        ModelAndView modelAndView = new ModelAndView("/html/other/notice");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/other/tips")
+    public ModelAndView htmlOtherTips(){
+        ModelAndView modelAndView = new ModelAndView("/html/other/tips");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/activate")
+    public ModelAndView htmlUserActivate(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/activate");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/forget")
+    public ModelAndView htmlUserForget(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/forget");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/home")
+    public ModelAndView htmlUserHome(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/home");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/index")
+    public ModelAndView htmlUserIndex(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/index");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/login")
+    public ModelAndView htmlUserLogin(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/login");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/message")
+    public ModelAndView htmlUserMessage(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/message");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/reg")
+    public ModelAndView htmlUserReg(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/reg");
+        return modelAndView;
+    }
+
+    @RequestMapping("/html/user/set")
+    public ModelAndView htmlUserSet(){
+        ModelAndView modelAndView = new ModelAndView("/html/user/set");
         return modelAndView;
     }
 
