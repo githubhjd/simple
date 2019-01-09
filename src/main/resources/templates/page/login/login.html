@@ -9,13 +9,13 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">
-	<link rel="icon" th:href="@{../../favicon.ico}">
+	<link rel="icon" th:href="@{/layuicms2.0/favicon.ico}">
 	<link rel="stylesheet" th:href="@{/layuicms2.0/layui/css/layui.css}" media="all" />
 	<link rel="stylesheet" th:href="@{/layuicms2.0/css/public.css}" media="all" />
 </head>
 <body class="loginBody">
 	<form class="layui-form">
-		<div class="login_face"><img src="../../images/face.jpg" class="userAvatar"></div>
+		<div class="login_face"><img th:src="@{/layuicms2.0/images/face.jpg}" class="userAvatar"></div>
 		<div class="layui-form-item input-item">
 			<label for="userName">用户名</label>
 			<input type="text" placeholder="请输入用户名" autocomplete="off" id="userName" class="layui-input" lay-verify="required">
@@ -27,7 +27,7 @@
 		<div class="layui-form-item input-item" id="imgCode">
 			<label for="code">验证码</label>
 			<input type="text" placeholder="请输入验证码" autocomplete="off" id="code" class="layui-input">
-			<img src="../../images/code.jpg">
+			<img th:src="@{/layuicms2.0/images/code.jpg}">
 		</div>
 		<div class="layui-form-item">
 			<button class="layui-btn layui-block" lay-filter="login" lay-submit>登录</button>
@@ -39,7 +39,8 @@
 		</div>
 	</form>
 	<script type="text/javascript" th:src="@{/layuicms2.0/layui/layui.js}"></script>
-	<script type="text/javascript" th:src="@{login.js}"></script>
+	<script type="text/javascript" th:src="@{/layuicms2.0/page/login/login.js}"></script>
 	<script type="text/javascript" th:src="@{/layuicms2.0/js/cache.js}"></script>
+
 </body>
 </html>
