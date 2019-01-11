@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .failureUrl("/login?error")
                 .permitAll() //登录界面用户任意访问
                 .and()
+                .csrf().disable()//403 Forbidden
                 .logout().permitAll();//注销行为任意访问
     }
 

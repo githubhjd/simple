@@ -1,21 +1,21 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <title>注册</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="keywords" content="fly,layui,前端社区">
   <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
-  <link rel="stylesheet" href="../../res/layui/css/layui.css">
-  <link rel="stylesheet" href="../../res/css/global.css">
+  <link rel="stylesheet" th:href="@{/fly-3.0/res/layui/css/layui.css}">
+  <link rel="stylesheet" th:href="@{/fly-3.0/res/css/global.css}">
 </head>
 <body>
 
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img src="../../res/images/logo.png" alt="layui">
+      <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">
@@ -32,13 +32,13 @@
     <ul class="layui-nav fly-nav-user">
       <!-- 未登入的状态 -->
       <li class="layui-nav-item">
-        <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+        <a class="iconfont icon-touxiang layui-hide-xs" th:href="@{/html/user/login}"></a>
       </li>
       <li class="layui-nav-item">
-        <a href="user/login.html">登入</a>
+        <a th:href="@{/html/user/login}">登入</a>
       </li>
       <li class="layui-nav-item">
-        <a href="user/reg.html">注册</a>
+        <a th:href="@{/html/user/reg}">注册</a>
       </li>
       <li class="layui-nav-item layui-hide-xs">
         <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
@@ -54,7 +54,7 @@
   <div class="fly-panel fly-panel-user" pad20>
     <div class="layui-tab layui-tab-brief" lay-filter="user">
       <ul class="layui-tab-title">
-        <li><a href="login.html">登入</a></li>
+        <li><a th:href="@{/html/user/login}">登入</a></li>
         <li class="layui-this">注册</li>
       </ul>
       <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
@@ -79,25 +79,25 @@
                 <div class="layui-input-inline">
                   <input type="password" id="L_pass" name="pass" required lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                <div class="layui-form-mid layui-word-aux">6-16位字母和数字组合</div>
               </div>
               <div class="layui-form-item">
                 <label for="L_repass" class="layui-form-label">确认密码</label>
                 <div class="layui-input-inline">
-                  <input type="password" id="L_repass" name="repass" required lay-verify="required" autocomplete="off" class="layui-input">
+                  <input type="password" id="L_repass" name="repass" required lay-verify="required|regPwd" autocomplete="off" class="layui-input">
                 </div>
               </div>
+              <!--<div class="layui-form-item">-->
+                <!--<label for="L_vercode" class="layui-form-label">人类验证</label>-->
+                <!--<div class="layui-input-inline">-->
+                  <!--<input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <!--<div class="layui-form-mid">-->
+                  <!--<span style="color: #c00;">{{d.vercode}}</span>-->
+                <!--</div>-->
+              <!--</div>-->
               <div class="layui-form-item">
-                <label for="L_vercode" class="layui-form-label">人类验证</label>
-                <div class="layui-input-inline">
-                  <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid">
-                  <span style="color: #c00;">{{d.vercode}}</span>
-                </div>
-              </div>
-              <div class="layui-form-item">
-                <button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
+                <button class="layui-btn" lay-filter="reg" lay-submit>立即注册</button>
               </div>
               <div class="layui-form-item fly-form-app">
                 <span>或者直接使用社交账号快捷注册</span>
@@ -122,7 +122,65 @@
   </p>
 </div>
 
-<script src="../../res/layui/layui.js"></script>
+<script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery'],function(){
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer
+        $ = layui.jquery;
+
+        //注册验证规则
+        form.verify({
+            regPwd: function(value) {
+                //获取密码
+                var L_pass = $("#L_pass").val();
+                if(!new RegExp(L_pass).test(value)) {
+                    return '两次输入的密码不一致';
+                }
+            }
+        });
+
+        //注册规则按钮
+        form.on("submit(reg)",function(data){
+            $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
+            Reg(data);
+            return false;
+        });
+
+        function Reg(data){
+            var $username = $("#L_username");
+            var $password = $("#L_pass");
+            var $address = $("#L_email");
+
+            $.ajax({
+                url:"/user/reg",
+                data:{
+                    username:$.trim($username.val()),
+                    password:$.trim($password.val()),
+                    address:$.trim($address.val())
+                },
+                type:"POST",
+                success:function (data) {
+                    if (data !== "repeat_Username" && data !== "password_wrong") {
+                        layer.msg(data,{
+                            time: 800
+                        },function () {
+                            window.location.href="/html/user/login";
+                        }
+                        );
+                    }else {
+                        layer.msg(data,{
+                            time: 800
+                        },function () {
+                            window.location.href="/html/user/reg";
+                        });
+                    }
+                }
+            })
+        }
+
+    })
+</script>
 <script>
 layui.cache.page = 'user';
 layui.cache.user = {

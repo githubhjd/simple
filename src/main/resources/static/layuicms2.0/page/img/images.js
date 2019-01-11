@@ -1,5 +1,5 @@
 layui.config({
-	base : "../../js/"
+	base : "/layuicms2.0/js/"
 }).use(['flow','form','layer','upload'],function(){
     var flow = layui.flow,
         form = layui.form,
@@ -12,7 +12,7 @@ layui.config({
     flow.load({
         elem: '#Images', //流加载容器
         done: function(page, next){ //加载下一页
-            $.get("../../json/images.json",function(res){
+            $.get("/layuicms2.0/json/images.json",function(res){
                 //模拟插入
                 var imgList = [],data = res.data;
                 var maxPage = imgNums*page < data.length ? imgNums*page : data.length;
@@ -35,7 +35,7 @@ layui.config({
     //多图片上传
     upload.render({
         elem: '.uploadNewImg',
-        url: '../../json/userface.json',
+        url: '/layuicms2.0/json/userface.json',
         multiple: true,
         before: function(obj){
             //预读本地文件示例，不支持ie8
@@ -110,5 +110,4 @@ layui.config({
             layer.msg("请选择需要删除的图片");
         }
     })
-
 })

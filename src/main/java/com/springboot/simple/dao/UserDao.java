@@ -1,13 +1,16 @@
 package com.springboot.simple.dao;
 
-import com.springboot.simple.domain.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
 public interface UserDao {
 
-    public SysUser findByUserName(String username);
+    String selectPasswordByUsername(@Param("username") String username);
 
+    String selectPasswordByAddress(@Param("address") String address);
+
+    void insertUser(@Param("username") String username, @Param("password") String password, @Param("address") String address, @Param("add_time") int add_time);
 }

@@ -9,14 +9,40 @@ layui.use(['form','layer','jquery'],function(){
         });
     })
 
-    登录按钮
+    //登录按钮
     form.on("submit(login)",function(data){
         $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
-        setTimeout(function(){
-            window.location.href = "/layuicms2.0/page/index";
-        },1000);
+        // setTimeout(function(){
+        //     window.location.href = "/layuicms2.0/page/index";
+        // },1000);
+        Login(data);
         return false;
     });
+
+    function Login(data){
+        var $userName = $("#userName");
+        var $password = $("#password");
+        var $code = $("#code");
+
+        $.ajax({
+            url:"/backlogin",
+            data:{
+                userName:$.trim($userName.val()),
+                password:$.trim($password.val()),
+                code:$.trim($code.val())
+            },
+            type:"POST",
+            success:function (data) {
+                if (data.TAG == undefined || data.TAG !== 1) {
+                    layer.msg('登录失败');
+                }else {
+                    window.setTimeout(function () {
+                        // window.location.href="/page/index";
+                    },200);
+                }
+            }
+        })
+    }
 
     //表单输入效果
     $(".loginBody .input-item").click(function(e){

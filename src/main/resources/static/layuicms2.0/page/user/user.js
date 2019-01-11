@@ -28,7 +28,7 @@ layui.use(['form','layer','laydate','table','laytpl'],function(){
     //用户等级
     table.render({
         elem: '#userGrade',
-        url : '../../json/userGrade.json',
+        url : '/layuicms2.0/json/userGrade.json',
         cellMinWidth : 95,
         cols : [[
             {field:"id", title: 'ID', width: 60, fixed:"left",sort:"true", align:'center', edit: 'text'},
