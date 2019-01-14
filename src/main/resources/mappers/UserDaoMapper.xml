@@ -12,6 +12,10 @@
         select IFNULL (MAX(password), 0) AS password from `user` where address=#{address}
     </select>
 
+    <select id="selectByUsername" resultType="Map" parameterType="String">
+        select * from `user` where username=#{username}
+    </select>
+
     <insert id="insertUser" parameterType="com.springboot.simple.domain.User">
         INSERT INTO `user`(username,password,address,add_time) VALUE (#{username},#{password},#{address},#{add_time})
     </insert>

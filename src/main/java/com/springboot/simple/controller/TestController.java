@@ -1,16 +1,32 @@
 package com.springboot.simple.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class TestController {
 
 //    @RequestMapping("/")
 //    public ModelAndView index(){
 //        ModelAndView modelAndView = new ModelAndView("userList");
+//        return modelAndView;
+//    }
+
+    // thymeleaf，前端接收后端的数据
+    @GetMapping(value = "/thymeleaf")
+    public String getMessage(Model model){
+        model.addAttribute("message", "This is your message");
+        return "thymeleaf";
+    }
+
+//    @GetMapping(value = "/thymeleaf")
+//    public ModelAndView thymeleaf(){
+//        ModelAndView modelAndView = new ModelAndView("thymeleaf");
 //        return modelAndView;
 //    }
 
@@ -32,11 +48,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/index")
-    public ModelAndView index(){
-        ModelAndView modelAndView = new ModelAndView("index");
-        return modelAndView;
-    }
+//    @RequestMapping("/index")
+//    public ModelAndView index(){
+//        ModelAndView modelAndView = new ModelAndView("index");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/404")
     public ModelAndView My404(){
@@ -288,11 +304,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/html/user/index")
-    public ModelAndView htmlUserIndex(){
-        ModelAndView modelAndView = new ModelAndView("/html/user/index");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/user/index")
+//    public ModelAndView htmlUserIndex(){
+//        ModelAndView modelAndView = new ModelAndView("/html/user/index");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/html/user/login")
     public ModelAndView htmlUserLogin(){
@@ -315,6 +331,31 @@ public class TestController {
     @RequestMapping("/html/user/set")
     public ModelAndView htmlUserSet(){
         ModelAndView modelAndView = new ModelAndView("/html/user/set");
+        return modelAndView;
+    }
+
+    //view中的html
+    @RequestMapping("/views/common/link")
+    public ModelAndView viewsCommonLink(){
+        ModelAndView modelAndView = new ModelAndView("/views/common/link");
+        return modelAndView;
+    }
+
+    @RequestMapping("/views/common/header")
+    public ModelAndView viewsCommonHeader(){
+        ModelAndView modelAndView = new ModelAndView("/views/common/header");
+        return modelAndView;
+    }
+
+    @RequestMapping("/views/common/footer")
+    public ModelAndView viewsCommonFooter(){
+        ModelAndView modelAndView = new ModelAndView("/views/common/footer");
+        return modelAndView;
+    }
+
+    @RequestMapping("/views/user/reg")
+    public ModelAndView viewsCommonReg(){
+        ModelAndView modelAndView = new ModelAndView("/views/user/reg");
         return modelAndView;
     }
 

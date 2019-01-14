@@ -712,7 +712,7 @@
       <dl class="fly-panel fly-list-one">
         <dt class="fly-panel-title">本周热议</dt>
         <dd>
-          <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
+          <a href="/html/jie/detail">基于 layui 的极简社区页面模版</a>
           <span><i class="iconfont icon-pinglun1"></i> 16</span>
         </dd>
         <dd>
@@ -797,13 +797,13 @@ layui.cache.page = '';
 layui.cache.user = {
   username: '游客'
   ,uid: -1
-  ,avatar: '../res/images/avatar/00.jpg'
+  ,avatar: '/fly-3.0/res/images/avatar/00.jpg'
   ,experience: 83
   ,sex: '男'
 };
 layui.config({
   version: "3.0.0"
-  ,base: '../res/mods/' //这里实际使用时，建议改成绝对路径
+  ,base: '/fly-3.0/res/mods/' //这里实际使用时，建议改成绝对路径
 }).extend({
   fly: 'index'
 }).use('fly');
