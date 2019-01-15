@@ -16,8 +16,16 @@
         select * from `user` where username=#{username}
     </select>
 
+    <select id="selectByAddress" resultType="Map" parameterType="String">
+        select * from `user` where address=#{address}
+    </select>
+
     <insert id="insertUser" parameterType="com.springboot.simple.domain.User">
-        INSERT INTO `user`(username,password,address,add_time) VALUE (#{username},#{password},#{address},#{add_time})
+        INSERT INTO `user`(username,password,address,add_time,grade_num,grade_name) VALUE (#{username},#{password},#{address},#{add_time},#{grade_num},#{grade_name})
     </insert>
+
+    <update id="updateUser" parameterType="com.springboot.simple.domain.User">
+        UPDATE `user` SET username=#{username},sex=#{sex},city=#{city},personal_note=#{personal_note} WHERE address=#{address}
+    </update>
 
 </mapper>

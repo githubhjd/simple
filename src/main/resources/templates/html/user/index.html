@@ -34,9 +34,9 @@
       <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
           <!--<cite class="layui-hide-xs">贤心</cite>-->
-          <cite class="layui-hide-xs" th:text="${username}">贤心</cite>
+          <cite class="layui-hide-xs" th:text="${username}">无</cite>
           <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-          <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
+          <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
           <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
         </a>
         <dl class="layui-nav-child">
@@ -60,13 +60,13 @@
       </a>
     </li>
     <li class="layui-nav-item layui-this">
-      <a th:href="@{/html/user/index}">
+      <a th:href="@{'/html/user/index?address='+${address}}">
         <i class="layui-icon">&#xe612;</i>
         用户中心
       </a>
     </li>
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/set}">
+      <a th:href="@{'/html/user/set?address='+${address}}">
         <i class="layui-icon">&#xe620;</i>
         基本设置
       </a>

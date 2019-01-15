@@ -142,7 +142,7 @@
 
         //注册规则按钮
         form.on("submit(reg)",function(data){
-            $(this).text("登录中...").attr("disabled","disabled").addClass("layui-disabled");
+            $(this).text("注册中...").attr("disabled","disabled").addClass("layui-disabled");
             Reg(data);
             return false;
         });
@@ -166,8 +166,7 @@
                             time: 800
                         },function () {
                             window.location.href="/html/user/login";
-                        }
-                        );
+                        });
                     }else {
                         layer.msg(data,{
                             time: 800

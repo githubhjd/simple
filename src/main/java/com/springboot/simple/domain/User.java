@@ -4,6 +4,8 @@ public class User {
     private String username;
     private String password;
     private String address;
+    private int grade_time;
+    private String grade_name;
     private int add_time;
 
     public String getUsername() {
@@ -38,12 +40,30 @@ public class User {
         this.add_time = add_time;
     }
 
+    public int getGrade_time() {
+        return grade_time;
+    }
+
+    public void setGrade_time(int grade_time) {
+        this.grade_time = grade_time;
+    }
+
+    public String getGrade_name() {
+        return grade_name;
+    }
+
+    public void setGrade_name(String grade_name) {
+        this.grade_name = grade_name;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
+                ", grade_time=" + grade_time +
+                ", grade_name='" + grade_name + '\'' +
                 ", add_time=" + add_time +
                 '}';
     }

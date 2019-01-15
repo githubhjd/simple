@@ -26,14 +26,26 @@ public class IndexController {
     @Autowired
     private UserDao userDao;
 
-//    @GetMapping(value = "/index1")
+    //会员用户中心
     @RequestMapping(value = "/html/user/index")
-    public String index(ModelMap modelMap){
-        Map map = userDao.selectByUsername("hjd");
-        modelMap.put("id", map.get("id"));
+    public String htmlUserIndex(ModelMap modelMap, String address){
+        Map map = userDao.selectByAddress(address);
+        modelMap.put("username", map.get("username"));
+        modelMap.put("address", map.get("address"));
+        modelMap.put("grade_num",map.get("grade_num"));
+        return "/html/user/index";
+    }
+
+    //会员基本设置
+    @RequestMapping(value = "/html/user/set")
+    public String index(ModelMap modelMap, String address){
+        Map map = userDao.selectByAddress(address);
         modelMap.put("username", map.get("username"));
         modelMap.put("password", map.get("password"));
+        modelMap.put("grade_num",map.get("grade_num"));
         modelMap.put("address", map.get("address"));
-        return "/html/user/index";
+        modelMap.put("city", map.get("city"));
+        modelMap.put("personal_note", map.get("personal_note"));
+        return "/html/user/set";
     }
 }

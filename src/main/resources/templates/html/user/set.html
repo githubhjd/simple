@@ -33,9 +33,9 @@
       <!-- 登入后的状态 -->
       <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
-          <cite class="layui-hide-xs">贤心</cite>
+          <cite class="layui-hide-xs" th:text="${username}">贤心</cite>
           <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-          <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
+          <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
           <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
         </a>
         <dl class="layui-nav-child">
@@ -43,7 +43,7 @@
           <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
           <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
-          <dd><a href="" style="text-align: center;">退出</a></dd>
+          <dd><a href="/html/user/login" style="text-align: center;">退出</a></dd>
         </dl>
       </li>
     </ul>
@@ -59,13 +59,13 @@
       </a>
     </li>
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/index}">
+      <a th:href="@{'/html/user/index?address='+${address}}">
         <i class="layui-icon">&#xe612;</i>
         用户中心
       </a>
     </li>
-    <li class="layui-nav-item layui-this">
-      <a th:href="@{/html/user/set}">
+    <li class="layui-nav-item">
+      <a th:href="@{'/html/user/set?address='+${address}}">
         <i class="layui-icon">&#xe620;</i>
         基本设置
       </a>
@@ -103,14 +103,14 @@
             <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">邮箱</label>
               <div class="layui-input-inline">
-                <input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" value="" class="layui-input">
+                <input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" th:value="@{${address}}" class="layui-input" disabled style="cursor: not-allowed !important;">
               </div>
               <div class="layui-form-mid layui-word-aux">如果您在邮箱已激活的情况下，变更了邮箱，需<a href="activate.html" style="font-size: 12px; color: #4f99cf;">重新验证邮箱</a>。</div>
             </div>
             <div class="layui-form-item">
               <label for="L_username" class="layui-form-label">昵称</label>
               <div class="layui-input-inline">
-                <input type="text" id="L_username" name="username" required lay-verify="required" autocomplete="off" value="" class="layui-input">
+                <input type="text" id="L_username" name="username" required lay-verify="required" autocomplete="off" th:value="@{${username}}" class="layui-input">
               </div>
               <div class="layui-inline">
                 <div class="layui-input-inline">
@@ -122,20 +122,20 @@
             <div class="layui-form-item">
               <label for="L_city" class="layui-form-label">城市</label>
               <div class="layui-input-inline">
-                <input type="text" id="L_city" name="city" autocomplete="off" value="" class="layui-input">
+                <input type="text" id="L_city" name="city" autocomplete="off" th:value="@{${city}}" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item layui-form-text">
               <label for="L_sign" class="layui-form-label">签名</label>
               <div class="layui-input-block">
-                <textarea placeholder="随便写些什么刷下存在感" id="L_sign"  name="sign" autocomplete="off" class="layui-textarea" style="height: 80px;"></textarea>
+                <textarea th:placeholder="@{${personal_note}}" id="L_sign"  name="sign" autocomplete="off" class="layui-textarea" style="height: 80px;"></textarea>
               </div>
             </div>
             <div class="layui-form-item">
-              <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+              <button class="layui-btn" key="set-mine" lay-filter="personal_rewrite" lay-submit>确认修改</button>
             </div>
           </div>
-          
+
           <div class="layui-form layui-form-pane layui-tab-item">
             <div class="layui-form-item" id="uploadSymbol">
               <div class="avatar-add">
@@ -213,6 +213,65 @@
 </div>
 
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery','upload'],function () {
+        var form = layui.form,
+            upload = layui.upload,
+            layer = parent.layer === undefined ? layui.layer : top.layer
+        $ = layui.jquery;
+
+
+        //登录按钮
+        form.on("submit(personal_rewrite)",function(data){
+            $(this).text("修改中...").attr("disabled","disabled").addClass("layui-disabled");
+            personal_rewrite(data);
+            return false;
+        });
+
+        function personal_rewrite(data) {
+            var $address = $("#L_email");
+            var $username = $("#L_username");
+            var $sex = $('[name="sex"]:checked');
+            var $city = $('#L_city');
+            var $personal_note = $("#L_sign");
+
+            $.ajax({
+                url:"/user/rewrite",
+                data:{
+                    address:$.trim($address.val()),
+                    username:$.trim($username.val()),
+                    sex:$.trim($sex.val()),
+                    city:$.trim($city.val()),
+                    personal_note:$personal_note.val()
+                },
+                type:"POST",
+                success:function (data) {
+                    if (data == "success") {
+                        layer.msg("success",{
+                            time:1000
+                        },function () {
+                            window.location.reload();
+                        });
+                    }else {
+                        layer.msg("fail");
+                    }
+                }
+            })
+        }
+
+        //上传个人头像
+        upload.render({
+            elem: '#uploadSymbol'
+            ,url: ''
+            ,done: function (res) {
+
+            }
+            ,error: function () {
+
+            }
+        })
+    })
+</script>
 <script>
 layui.cache.page = 'user';
 layui.cache.user = {

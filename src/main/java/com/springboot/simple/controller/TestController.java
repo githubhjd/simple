@@ -328,11 +328,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/html/user/set")
-    public ModelAndView htmlUserSet(){
-        ModelAndView modelAndView = new ModelAndView("/html/user/set");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/user/set")
+//    public ModelAndView htmlUserSet(){
+//        ModelAndView modelAndView = new ModelAndView("/html/user/set");
+//        return modelAndView;
+//    }
 
     //view中的html
     @RequestMapping("/views/common/link")
