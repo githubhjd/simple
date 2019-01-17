@@ -24,4 +24,8 @@ public interface UserDao {
 
     void updateUser(@Param("username") String username, @Param("sex") int sex, @Param("city") String city, @Param("personal_note") String personal_note, @Param("address") String address);
 
+    void updateUserPassword(@Param("password") String password, @Param("address") String address);
+
+    void updateUserProfilePhoto(@Param("profile_photo") String profile_photo, @Param("address") String address);
+
 }

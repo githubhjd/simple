@@ -33,12 +33,24 @@ public class IndexController {
         modelMap.put("username", map.get("username"));
         modelMap.put("address", map.get("address"));
         modelMap.put("grade_num",map.get("grade_num"));
+        modelMap.put("profile_photo", map.get("profile_photo"));
         return "/html/user/index";
+    }
+
+    //会员的贴子
+    @RequestMapping(value = "/html/user/post")
+    public String htmlUserPost(ModelMap modelMap, String address){
+        Map map = userDao.selectByAddress(address);
+        modelMap.put("username", map.get("username"));
+        modelMap.put("address", map.get("address"));
+        modelMap.put("grade_num",map.get("grade_num"));
+        modelMap.put("profile_photo", map.get("profile_photo"));
+        return "/html/user/post";
     }
 
     //会员基本设置
     @RequestMapping(value = "/html/user/set")
-    public String index(ModelMap modelMap, String address){
+    public String htmlUserSet(ModelMap modelMap, String address){
         Map map = userDao.selectByAddress(address);
         modelMap.put("username", map.get("username"));
         modelMap.put("password", map.get("password"));
@@ -46,6 +58,20 @@ public class IndexController {
         modelMap.put("address", map.get("address"));
         modelMap.put("city", map.get("city"));
         modelMap.put("personal_note", map.get("personal_note"));
+        modelMap.put("profile_photo", map.get("profile_photo"));
         return "/html/user/set";
+    }
+
+//    会员发帖
+    @RequestMapping(value = "/html/jie/add")
+    public String htmlJieAdd(ModelMap modelMap, String address){
+        Map map = userDao.selectByAddress(address);
+        modelMap.put("username", map.get("username"));
+        modelMap.put("password", map.get("password"));
+        modelMap.put("grade_num",map.get("grade_num"));
+        modelMap.put("address", map.get("address"));
+        modelMap.put("personal_note", map.get("personal_note"));
+        modelMap.put("profile_photo", map.get("profile_photo"));
+        return "/html/jie/add";
     }
 }

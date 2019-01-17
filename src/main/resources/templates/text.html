@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>upload模块快速使用</title>
+    <link rel="stylesheet" th:href="@{/fly-3.0/res/layui/css/layui.css}" media="all">
+</head>
+<body>
+
+<!--<button type="button" class="layui-btn" id="test1">-->
+    <!--<i class="layui-icon">&#xe67c;</i>上传图片-->
+<!--</button>-->
+
+
+            <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
+            <button type="button" class="layui-btn upload-img" id="uploadProfilePhoto">
+                <i class="layui-icon">&#xe67c;</i>上传头像
+            </button>
+            <img id="profile_photo" src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+            <span class="loading"></span>
+
+
+<script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script>
+    layui.use('upload', function(){
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#uploadProfilePhoto' //绑定元素
+            ,url: '/user/uploadProfilePhoto/' //上传接口
+            ,done: function(res){
+                //上传完毕回调
+                if (res.code > 0) {
+                    layer.msg('上传失败');
+                }
+                layer.msg('上传成功');
+            }
+            ,error: function () {
+                var profile_photo = $('#profile_photo');
+                profile_photo.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs profile_photo-reload">重试</a>');
+                profile_photo.find('.profile_photo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

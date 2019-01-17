@@ -36,7 +36,8 @@
           <cite class="layui-hide-xs" th:text="${username}">贤心</cite>
           <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
           <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
-          <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+          <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">-->
+          <img th:src="${profile_photo}">
         </a>
         <dl class="layui-nav-child">
           <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
@@ -62,6 +63,12 @@
       <a th:href="@{'/html/user/index?address='+${address}}">
         <i class="layui-icon">&#xe612;</i>
         用户中心
+      </a>
+    </li>
+    <li class="layui-nav-item">
+      <a th:href="@{'/html/user/post?address='+${address}}">
+        <i class="layui-icon">&#xe606;</i>
+        我的贴子
       </a>
     </li>
     <li class="layui-nav-item">
@@ -139,11 +146,12 @@
           <div class="layui-form layui-form-pane layui-tab-item">
             <div class="layui-form-item" id="uploadSymbol">
               <div class="avatar-add">
+                <input type="hidden" name="" id="address1" th:value="@{${address}}">
                 <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
-                <button type="button" class="layui-btn upload-img">
+                <button type="button" class="layui-btn upload-img" id="uploadProfilePhoto">
                   <i class="layui-icon">&#xe67c;</i>上传头像
                 </button>
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+                <img id="profile_photo" th:src="@{${profile_photo}}">
                 <span class="loading"></span>
               </div>
             </div>
@@ -151,7 +159,8 @@
           
           <div class="layui-form layui-form-pane layui-tab-item">
             <form action="/user/repass" method="post">
-              <div class="layui-form-item">
+              <input type="hidden" name="" id="address" th:value="@{${address}}">
+                <div class="layui-form-item">
                 <label for="L_nowpass" class="layui-form-label">当前密码</label>
                 <div class="layui-input-inline">
                   <input type="password" id="L_nowpass" name="nowpass" required lay-verify="required" autocomplete="off" class="layui-input">
@@ -171,11 +180,11 @@
                 </div>
               </div>
               <div class="layui-form-item">
-                <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+                <button class="layui-btn" key="set-mine" lay-filter="personal_repass" lay-submit>确认修改</button>
               </div>
             </form>
           </div>
-          
+
           <div class="layui-form layui-form-pane layui-tab-item">
             <ul class="app-bind">
               <li class="fly-msg app-havebind">
@@ -217,15 +226,52 @@
     layui.use(['form','layer','jquery','upload'],function () {
         var form = layui.form,
             upload = layui.upload,
-            layer = parent.layer === undefined ? layui.layer : top.layer
-        $ = layui.jquery;
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery;
 
+        //注册验证规则
+        form.verify({
+            regPwd: function(value) {
+                //获取密码
+                var L_pass = $("#L_pass").val();
+                if(!new RegExp(L_pass).test(value)) {
+                    return '两次输入的密码不一致';
+                }
+            }
+            ,newPwd: [
+                /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/
+                ,'6-16位字母和数字组合'
+            ]
+        });
 
-        //登录按钮
+        //修改資料按钮
         form.on("submit(personal_rewrite)",function(data){
             $(this).text("修改中...").attr("disabled","disabled").addClass("layui-disabled");
             personal_rewrite(data);
             return false;
+        });
+
+        //修改密碼按钮
+        form.on("submit(personal_repass)",function(data){
+            $(this).text("修改中...").attr("disabled","disabled").addClass("layui-disabled");
+            personal_repass(data);
+            return false;
+        });
+
+        //上传个人头像
+        var uploadInst = upload.render({
+            elem: '#uploadProfilePhoto' //绑定元素
+            ,url: '/user/uploadProfilePhoto/'//上传接口
+            ,data: {
+                address: $('#address1').val()
+            }
+            ,done: function(res){
+                //上传完毕回调
+                if (res.code > 0) {
+                    layer.msg('上传失败');
+                }
+                layer.msg('上传成功');
+            }
         });
 
         function personal_rewrite(data) {
@@ -259,17 +305,36 @@
             })
         }
 
-        //上传个人头像
-        upload.render({
-            elem: '#uploadSymbol'
-            ,url: ''
-            ,done: function (res) {
+        function personal_repass(data) {
+            var $address = $("#address");
+            var $password = $("#L_nowpass");
+            var $rePassword = $('#L_pass');
 
-            }
-            ,error: function () {
-
-            }
-        })
+            $.ajax({
+                url:"/user/repass",
+                data:{
+                    address:$.trim($address.val()),
+                    password:$.trim($password.val()),
+                    rePassword:$.trim($rePassword.val())
+                },
+                type:"POST",
+                success:function (data) {
+                    if (data == "repass_success") {
+                        layer.msg(data,{
+                            time:1000
+                        },function () {
+                            window.location.reload();
+                        });
+                    }else {
+                        layer.msg(data,{
+                            time:1000
+                        },function () {
+                            window.location.reload();
+                        });
+                    }
+                }
+            })
+        }
     })
 </script>
 <script>

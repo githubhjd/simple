@@ -6,6 +6,8 @@ public class User {
     private String address;
     private int grade_time;
     private String grade_name;
+    private String personal_note;
+    private String profile_photo;
     private int add_time;
 
     public String getUsername() {
@@ -56,6 +58,22 @@ public class User {
         this.grade_name = grade_name;
     }
 
+    public String getPersonal_note() {
+        return personal_note;
+    }
+
+    public void setPersonal_note(String personal_note) {
+        this.personal_note = personal_note;
+    }
+
+    public String getProfile_photo() {
+        return profile_photo;
+    }
+
+    public void setProfile_photo(String profile_photo) {
+        this.profile_photo = profile_photo;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -64,6 +82,8 @@ public class User {
                 ", address='" + address + '\'' +
                 ", grade_time=" + grade_time +
                 ", grade_name='" + grade_name + '\'' +
+                ", personal_note='" + personal_note + '\'' +
+                ", profile_photo='" + profile_photo + '\'' +
                 ", add_time=" + add_time +
                 '}';
     }

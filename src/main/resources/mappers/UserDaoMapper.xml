@@ -28,4 +28,12 @@
         UPDATE `user` SET username=#{username},sex=#{sex},city=#{city},personal_note=#{personal_note} WHERE address=#{address}
     </update>
 
+    <update id="updateUserPassword" parameterType="com.springboot.simple.domain.User">
+        UPDATE `user` SET password=#{password} WHERE address=#{address}
+    </update>
+
+    <update id="updateUserProfilePhoto" parameterType="com.springboot.simple.domain.User">
+        UPDATE `user` SET profile_photo=#{profile_photo} WHERE address=#{address}
+    </update>
+
 </mapper>

@@ -7,6 +7,7 @@ public class SysUser {
     private String username;
     private String password;
 
+    //一个用户有多个角色、对应sys_role_user表
     private List<SysRole> roles;
 
     public Integer getId() {

@@ -37,7 +37,8 @@
           <cite class="layui-hide-xs" th:text="${username}">无</cite>
           <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
           <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
-          <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+          <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">-->
+          <img th:src="${profile_photo}">
         </a>
         <dl class="layui-nav-child">
           <dd><a th:href="@{/html/user/set}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
@@ -63,6 +64,12 @@
       <a th:href="@{'/html/user/index?address='+${address}}">
         <i class="layui-icon">&#xe612;</i>
         用户中心
+      </a>
+    </li>
+    <li class="layui-nav-item">
+      <a th:href="@{'/html/user/post?address='+${address}}">
+        <i class="layui-icon">&#xe606;</i>
+        我的贴子
       </a>
     </li>
     <li class="layui-nav-item">
@@ -96,6 +103,20 @@
       您的邮箱尚未验证，这比较影响您的帐号安全，<a href="activate.html">立即去激活？</a>
     </div>
     -->
+
+    <div class="layui-row layui-col-space20">
+      <div class="layui-col-md6">
+        <div class="fly-panel fly-panel-border">
+          <div class="fly-panel-title">我的会员信息</div>
+          <div class="fly-panel-main layui-text" style="padding: 18px 15px; height: 50px; line-height: 26px;">
+            <p>
+              您当前为<i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="layui-tab layui-tab-brief" lay-filter="user">
       <ul class="layui-tab-title" id="LAY_mine">
         <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span>89</span>）</li>

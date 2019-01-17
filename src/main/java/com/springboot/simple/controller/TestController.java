@@ -66,6 +66,12 @@ public class TestController {
         return modelAndView;
     }
 
+    @RequestMapping("/text")
+    public ModelAndView text(){
+        ModelAndView modelAndView = new ModelAndView("text");
+        return modelAndView;
+    }
+
     @RequestMapping("/cms/index")
     public ModelAndView cmsIndex(){
         ModelAndView modelAndView = new ModelAndView("cms/index");
@@ -250,11 +256,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/html/jie/add")
-    public ModelAndView htmlJieAdd(){
-        ModelAndView modelAndView = new ModelAndView("/html/jie/add");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/jie/add")
+//    public ModelAndView htmlJieAdd(){
+//        ModelAndView modelAndView = new ModelAndView("/html/jie/add");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/html/jie/detail")
     public ModelAndView htmlJieDetail(){
