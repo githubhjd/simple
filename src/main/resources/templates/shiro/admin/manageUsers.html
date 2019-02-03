@@ -1,0 +1,88 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理用户</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .table {
+            border: 1px solid #666;
+            width: 100%;
+            text-align: center;
+
+        }
+
+        input[type=search] {
+            width: 14%;
+            height: 35px;
+            font-size: 16px;
+            float: right;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .currentUser {
+            display: inline;
+        }
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: pointer;
+            color: red;
+        }
+        p {
+            margin: 15px 0 5px 0;
+        }
+    </style>
+</head>
+<body>
+<p th:text="'当前用户：' + ${username}" class="currentUser"></p>
+<a href="/logout" style="font-size: 14px">退出登录</a>
+<a href="/" style="font-size: 14px">返回首页</a>
+<table class="table" border="1" cellspacing="0" cellpadding="5">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>用户名称</th>
+        <th>用户角色</th>
+        <th>用户权限</th>
+        <th colspan="2">操作</th>
+
+    </tr>
+    </thead>
+    <tbody th:if="${users != null}">
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+
+        <td th:if="${user.roleList != null}">
+            <span th:each="role : ${user.roleList}">
+                <span th:text="${role.role_name}"></span>
+            </span>
+        </td>
+
+        <td th:if="${user.roleList != null}">
+            <span th:each="role : ${user.roleList}">
+                <span th:if="${role.authList != null}" th:each="auth: ${role.authList}">
+                    <span th:text="${auth.auth_name}"></span> |
+
+                </span>
+            </span>
+        </td>
+
+        <td>
+            <a th:href="@{'/admin/delete?id=' + ${user.id}}">删除用户</a>
+        </td>
+        <td>
+            <a th:href="@{'/admin/updateOneUserPage?id=' + ${user.id}}">修改用户信息</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,14 +1,18 @@
 package com.springboot.simple.domain;
 
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class SysUser {
+@Data
+public class SysUser implements Serializable {
     private Integer id;
     private String username;
     private String password;
 
     //一个用户有多个角色、对应sys_role_user表
-    private List<SysRole> roles;
+    private List<SysRole> sysRoleList;
 
     public Integer getId() {
         return id;
@@ -34,11 +38,11 @@ public class SysUser {
         this.password = password;
     }
 
-    public List<SysRole> getRoles() {
-        return roles;
+    public List<SysRole> getSysRoleList() {
+        return sysRoleList;
     }
 
-    public void setRoles(List<SysRole> roles) {
-        this.roles = roles;
+    public void setSysRoleList(List<SysRole> sysRoleList) {
+        this.sysRoleList = sysRoleList;
     }
 }

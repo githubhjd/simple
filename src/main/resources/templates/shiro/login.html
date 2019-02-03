@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        form {
+            border: 1px solid;
+            width: 30%;
+            text-align: center;
+            display: inline-block;
+            position: fixed;
+            top: 30%;
+            left: 35%;
+            color: #666;
+            font-weight: lighter;
+        }
+
+        p {
+            margin: 15px 0 5px 0;
+        }
+
+        input[type=submit] {
+            margin: 20px;
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        .error {
+            font-size: 16px;
+            margin: 5px 0 2px 0;
+        }
+         h6{
+             margin: 0;
+             overflow: auto;
+         }
+
+        .register {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/shiro/login" method="post">
+    <!-- 为了让shiro自动匹配，字段必须是username、password -->
+    <p>账号</p><input type="text" name="username" value="admin"/>
+    <p>密码</p><input type="password" name="password" value="123456"/>
+    <span th:if="${msg != null}">
+            <p class="error">错误信息</p><h6 th:text="${msg}"></h6>
+    </span>
+    <p><input type="submit" value="登录"/></p>
+    <input type="checkbox" name="rememberMe">记住我<br>
+    <p class="register"><a href="/register">注册</a></p>
+</form>
+</body>
+</html>

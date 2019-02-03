@@ -1,0 +1,192 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改用户信息</title>
+    <style>
+        .roleList2 {
+            display: none;
+        }
+
+        .authList2 {
+            display: none;
+        }
+
+        form {
+            border: 1px solid;
+            width: 30%;
+            text-align: center;
+            display: inline-block;
+            position: fixed;
+            top: 30%;
+            left: 35%;
+            color: #666;
+            font-weight: lighter;
+        }
+
+        p {
+            margin: 15px 0 5px 0;
+        }
+
+        input[type=submit] {
+            margin: 20px;
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        .currentUser {
+            display: inline;
+        }
+
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: pointer;
+            color: red;
+        }
+
+        .submit {
+            margin-top: 15px;
+        }
+    </style>
+    <script src="/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".addRoleButton").click(function () {
+
+                $(".roleList1").css("display", "none");
+                $(".addRoleButton").css("display", "none");
+                $(".delRoleButton").css("display", "none");
+                $(".roleList1").attr("name", "");
+                $(".roleList2").css("display", "inline-block");
+                $(".roleList2").attr("name", "role_id");
+            })
+
+            $(".addAuthButton").click(function () {
+
+                $(".authList1").css("display", "none");
+                $(".addAuthButton").css("display", "none");
+                $(".delAuthButton").css("display", "none");
+                $(".authList1").attr("name", "");
+                $(".authList2").css("display", "inline-block");
+                $(".authList2").attr("name", "ahth_id");
+            })
+
+
+            $(".delRoleButton").click(function () {
+
+                var role_id = $(".roleList1").val();
+                var user_id = $(".user_id").val();
+                $.ajax({
+                    type : 'GET',
+                    url : '/admin/delete/role',
+                    data : {
+                        role_id : role_id,
+                        user_id : user_id
+                    },
+                    success : function (res) {
+                        if (res == 1) {
+                            alert("删除成功！")
+                            location.reload()
+                        }
+                    },
+                    fail : function (res) {
+                        alert("删除失败")
+                        location.reload()
+                    }
+                })
+            })
+
+            $(".delAuthButton").click(function () {
+
+                var role_id = $(".roleList1").val();
+                var auth_id = $(".authList1").val();
+                $.ajax({
+                    type : 'GET',
+                    url : '/admin/delete/auth',
+                    data : {
+                        role_id : role_id,
+                        auth_id : auth_id
+                    },
+                    success : function (res) {
+                        if (res == 1) {
+                            alert("删除成功！")
+                            location.reload()
+                        }
+                    },
+                    fail : function (res) {
+                        alert("删除失败")
+                        location.reload()
+                    }
+                })
+            })
+
+
+            $(".submit").click(function () {
+                var user_id = $(".user_id").val();
+                var role_id = $(".roleList1").val();
+                var auth_id = $(".authList2").val();
+                $.ajax({
+                    type : 'POST',
+                    url : '/admin/update',
+                    data : {
+                        user_id : user_id,
+                        role_id : role_id,
+                        auth_id : auth_id
+                    },
+                    success : function (res) {
+                        if (res == 1) {
+                            alert("修改成功！")
+                            window.location.href = "/admin/queryAllUser";
+                        }
+                    },
+                    fail : function (res) {
+                        alert("修改失败")
+                        window.location.href = "/admin/queryAllUser";
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<p th:text="'当前用户：' + ${username}" class="currentUser"></p>
+<a href="/logout" style="font-size: 14px">退出登录</a>
+<a href="/" style="font-size: 14px">返回首页</a>
+<form action="/admin/update" method="post">
+    <p>用户编号</p><input type="text" class="user_id" readonly name="user_id" th:attr="value=${user.id}">
+    <p>用户名称</p><input type="text" readonly th:attr="value=${user.username}">
+    <p>用户角色</p>
+
+    <select class="roleList1" name="role_id">
+        <option th:each="role : ${user.roleList}" th:attr="value=${role.id}"
+                th:text="${role.role_name}"></option>
+        <option value="null">Null</option>
+    </select>
+
+    <select class="roleList2" name="">
+        <option th:each="role:${roleList}" th:attr="value=${role.id}" th:text="${role.role_name}"></option>
+        <option value="null">Null</option>
+    </select>
+    <input class="addRoleButton" disabled type="button" value="添加角色"/>
+    <input class="delRoleButton" disabled type="button" value="删除角色"/>
+    <p>用户权限</p>
+    <select class="authList1" name="auth_id">
+        <option th:each="auth:${user.roleList[0].authList}" th:text="${auth.auth_name}"
+                th:attr="value=${auth.id}"></option>
+        <option value="null">Null</option>
+    </select>
+    <select class="authList2" name="">
+        <option th:each="auth:${authList}" th:text="${auth.auth_name}" th:attr="value=${auth.id}"></option>
+        <option value="null">Null</option>
+    </select>
+    <input class="addAuthButton" type="button" value="添加权限"/>
+    <input class="delAuthButton" type="button" value="删除权限"/><br>
+    <input class="submit" type="button" value="提交">
+</form>
+</body>
+
+</html>

@@ -86,7 +86,7 @@
                 <div class="layui-col-md3">
                   <label class="layui-form-label">所在专栏</label>
                   <div class="layui-input-block">
-                    <select lay-verify="required" name="class" lay-filter="column"> 
+                    <select lay-verify="required" name="class" lay-filter="post_type">
                       <option></option> 
                       <option value="0">提问</option> 
                       <option value="99">分享</option>
@@ -141,7 +141,7 @@
                 <div class="layui-inline">
                   <label class="layui-form-label">悬赏飞吻</label>
                   <div class="layui-input-inline" style="width: 190px;">
-                    <select name="experience">
+                    <select name="experience" id="post_bounty">
                       <option value="20">20</option>
                       <option value="30">30</option>
                       <option value="50">50</option>
@@ -162,7 +162,7 @@
                 <!--</div>-->
               <!--</div>-->
               <div class="layui-form-item">
-                <button class="layui-btn" lay-filter="*" lay-submit>立即发布</button>
+                <button class="layui-btn" lay-filter="post_receive" lay-submit>立即发布</button>
               </div>
             </form>
           </div>
@@ -182,6 +182,44 @@
 </div>
 
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery','upload'],function () {
+        var form = layui.form,
+            upload = layui.upload,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery;
+
+        //发帖
+        form.on("submit(post_receive)",function(data){
+            $(this).text("发帖中...").attr("disabled","disabled").addClass("layui-disabled");
+            form.on("select", function (data) {
+                $("#post_type").val(data.value)//赋值
+            });
+            post_receive(data);
+            return false;
+        });
+
+        function post_receive(data) {
+            // var $post_type = $("#post_type").val();
+            form.on("select(post_type)", function (data) {
+                $("#post_type").val(data.value)//赋值
+            });
+            // console.log($post_type)
+            var $title = $("#L_title");
+            var $main_spec = $("#L_content");
+            $.ajax({
+                type: 'post',
+                url: '/postReceive',
+                data: {
+                    post_type:data.value,
+                    title:$.trim($title.val()),
+                    main_spec:$.trim($main_spec.val()),
+                },
+                success: console.log('success'),
+            })
+        }
+    })
+</script>
 <script>
 layui.cache.page = 'jie';
 layui.cache.user = {

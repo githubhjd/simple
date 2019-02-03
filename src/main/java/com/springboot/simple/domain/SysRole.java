@@ -1,13 +1,17 @@
 package com.springboot.simple.domain;
 
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class SysRole {
+@Data
+public class SysRole implements Serializable {
     private Integer id;
     private String role_name;
 
     //角色可有多个权限，对应role_auth
-    private List<SysAuth> authList;
+    private List<SysAuth> sysAuthList;
 
     public Integer getId() {
         return id;
@@ -25,11 +29,11 @@ public class SysRole {
         this.role_name = role_name;
     }
 
-    public List<SysAuth> getAuthList() {
-        return authList;
+    public List<SysAuth> getSysAuthList() {
+        return sysAuthList;
     }
 
-    public void setAuthList(List<SysAuth> authList) {
-        this.authList = authList;
+    public void setSysAuthList(List<SysAuth> sysAuthList) {
+        this.sysAuthList = sysAuthList;
     }
 }

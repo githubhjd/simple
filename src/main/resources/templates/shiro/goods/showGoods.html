@@ -1,0 +1,104 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查询商品</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .table {
+            border: 1px solid #666;
+            width: 100%;
+            text-align: center;
+
+        }
+
+        input[type=search] {
+            width: 110%;
+            height: 35px;
+            font-size: 16px;
+
+        }
+
+        .search {
+            float: right;
+            display: inline-block;
+            margin-right: 30px;
+            /*margin-bottom: 4px;*/
+        }
+
+        .currentUser {
+            display: inline;
+        }
+
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div style="overflow: hidden">
+   <div style="display: inline">
+       <p th:text="'当前用户：' + ${username}" class="currentUser"></p>
+       <a href="/logout" style="font-size: 14px">退出登录</a>
+       <a href="/" style="font-size: 14px">返回首页</a>
+
+   </div>
+    <div class="search">
+        <form action="/goods/query">
+            <input type="search" autofocus name="name" placeholder="输入商品名称，回车搜索">
+        </form>
+    </div>
+
+</div>
+<table class="table" border="1" cellspacing="0" cellpadding="5">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>商品名称</th>
+        <th>单价/元</th>
+        <th>数量/个</th>
+        <th colspan="2">操作</th>
+
+    </tr>
+    </thead>
+    <tbody th:if="${goodsList != null}">
+    <tr th:each="goods : ${goodsList}">
+        <td th:text="${goods.id}"></td>
+        <td th:text="${goods.name}"></td>
+        <td th:text="${goods.price}"></td>
+        <td th:text="${goods.num}"></td>
+        <td>
+            <a th:href="@{'/goods/delete?id=' + ${goods.id}}">删除</a>
+        </td>
+        <td>
+            <a th:href="@{'/goods/updateGoodsPage?name=' + ${goods.name}}">修改</a>
+        </td>
+    </tr>
+    </tbody>
+
+    <tbody th:if="${goods != null}">
+    <tr>
+        <th th:text="${goods.id}"></th>
+        <td th:text="${goods.name}"></td>
+        <td th:text="${goods.price}"></td>
+        <td th:text="${goods.num}"></td>
+        <td>
+            <a th:href="@{'/goods/delete?id=' + ${goods.id}}">删除</a>
+        </td>
+        <td>
+            <a th:href="@{'/goods/updateGoodsPage?name=' + ${goods.name}}">修改</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

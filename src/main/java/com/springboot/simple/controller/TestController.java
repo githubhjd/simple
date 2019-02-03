@@ -208,11 +208,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/html/index")
-    public ModelAndView htmlIndex(){
-        ModelAndView modelAndView = new ModelAndView("/html/index");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/index")
+//    public ModelAndView htmlIndex(){
+//        ModelAndView modelAndView = new ModelAndView("/html/index");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/html/case/case")
     public ModelAndView htmlCaseCase(){

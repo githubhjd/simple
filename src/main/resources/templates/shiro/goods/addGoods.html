@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新增商品</title>
+    <style>
+        form {
+            border: 1px solid;
+            width: 30%;
+            text-align: center;
+            display: inline-block;
+            position: fixed;
+            top: 30%;
+            left: 35%;
+            color: #666;
+            font-weight: lighter;
+        }
+
+        p {
+            margin: 15px 0 5px 0;
+        }
+
+        input[type=submit] {
+            margin: 20px;
+            font-size: 18px;
+            font-weight: lighter;
+        }
+
+        .currentUser {
+            display: inline;
+        }
+
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<p th:text="'当前用户：' + ${username}" class="currentUser"></p>
+<a href="/logout" style="font-size: 14px">退出登录</a>
+<a href="/" style="font-size: 14px">返回首页</a>
+
+<form action="/goods/add" method="post">
+    <p>商品名称</p><input type="text" name="name"><br>
+    <p>商品单价</p><input type="number" name="price"><br>
+    <p>商品数量</p><input type="number" name="num"><br>
+    <input type="submit" value="添加">
+</form>
+</body>
+</html>

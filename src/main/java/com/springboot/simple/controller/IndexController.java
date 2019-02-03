@@ -74,4 +74,17 @@ public class IndexController {
         modelMap.put("profile_photo", map.get("profile_photo"));
         return "/html/jie/add";
     }
+
+    //   会员登录主页
+    @RequestMapping(value = "/html/indexSuc")
+    public String htmlIndexSuc(ModelMap modelMap, String address){
+        Map map = userDao.selectByAddress(address);
+        modelMap.put("username", map.get("username"));
+        modelMap.put("password", map.get("password"));
+        modelMap.put("grade_num",map.get("grade_num"));
+        modelMap.put("address", map.get("address"));
+        modelMap.put("personal_note", map.get("personal_note"));
+        modelMap.put("profile_photo", map.get("profile_photo"));
+        return "/html/indexSuc";
+    }
 }

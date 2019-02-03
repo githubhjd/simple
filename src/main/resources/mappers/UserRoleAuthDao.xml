@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.simple.dao.SysUserSysRoleSysAuthDao">
+
+
+    <delete id="delSysRole">
+        delete from sys_role_user where sys_user_id = #{arg0} and sys_role_id = #{arg1}
+    </delete>
+
+    <delete id="delSysAuth">
+        delete from sys_role_auth where sys_role_id = #{arg0} and sys_auth_id = #{arg1}
+    </delete>
+
+    <insert id="saveSysRoleSysAuth">
+        insert into sys_role_auth values (#{arg0}, #{arg1})
+    </insert>
+
+    <insert id="saveSysUserSysRole">
+        insert into sys_role_user values (#{arg0}, #{arg1})
+    </insert>
+
+</mapper>
