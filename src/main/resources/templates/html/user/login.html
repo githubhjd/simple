@@ -18,7 +18,7 @@
       <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
-      <li class="layui-nav-item layui-this">
+      <li class="layui-nav-item layui-this">d
         <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
       </li>
       <li class="layui-nav-item">
@@ -143,21 +143,21 @@
                           window.location.href="/html/user/login";
                       })
                   }else {
-                      layui.cache.page = 'user';
-                      layui.cache.user = {
-                          username: data
-                          ,uid: -1
-                          ,avatar: '/fly-3.0/res/images/avatar/00.jpg'
-                          ,experience: 83
-                          ,sex: '男'
-                      };
-                      layui.config({
-                          version: "3.0.0"
-                          ,base: '/fly-3.0/res/mods/'
-                      }).extend({
-                          fly: 'index'
-                      }).use('fly');
-                      window.location.href="/html/user/index?address="+data;
+                      // layui.cache.page = 'user';
+                      // layui.cache.user = {
+                      //     username: data
+                      //     ,uid: -1
+                      //     ,avatar: '/fly-3.0/res/images/avatar/00.jpg'
+                      //     ,experience: 83
+                      //     ,sex: '男'
+                      // };
+                      // layui.config({
+                      //     version: "3.0.0"
+                      //     ,base: '/fly-3.0/res/mods/'
+                      // }).extend({
+                      //     fly: 'index'
+                      // }).use('fly');
+                      window.location.href="/html/indexSuc?address="+data;
                   }
               }
           })

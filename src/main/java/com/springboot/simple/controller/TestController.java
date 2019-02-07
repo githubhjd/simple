@@ -262,11 +262,11 @@ public class TestController {
 //        return modelAndView;
 //    }
 
-    @RequestMapping("/html/jie/detail")
-    public ModelAndView htmlJieDetail(){
-        ModelAndView modelAndView = new ModelAndView("/html/jie/detail");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/jie/detail")
+//    public ModelAndView htmlJieDetail(){
+//        ModelAndView modelAndView = new ModelAndView("/html/jie/detail");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/html/jie/index")
     public ModelAndView htmlJieIndex(){
