@@ -11,21 +11,15 @@
     <link rel="stylesheet" th:href="@{/fly-3.0/res/css/global.css}">
 </head>
 <body>
-
+<span id="access_address" style="display:none" th:text="${address}"></span>
 <div class="fly-header layui-bg-black">
     <div class="layui-container">
         <a class="fly-logo" href="/">
-            <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
+            <img th:src="@{/fly-3.0/res/images/zj.png}" alt="layui">
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+                <a th:href="@{'/html/indexSuc?address='+${address}}"><i class="iconfont icon-jiaoliu"></i>交流</a>
             </li>
         </ul>
 
@@ -33,21 +27,21 @@
             <!-- 登入后的状态 -->
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
-                    <!--<cite class="layui-hide-xs">贤心</cite>-->
-                    <cite class="layui-hide-xs" th:text="${username}">无</cite>
+                    <cite class="layui-hide-xs" th:text="${username}">贤心</cite>
                     <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
                     <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
                     <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">-->
                     <img th:src="${profile_photo}">
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{/html/user/set}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a th:href="@{/html/user/message}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-                    <dd><a th:href="@{/html/user/home}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+                    <dd><a th:href="@{'/html/user/set?address='+${address}}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a th:href="@{'/html/user/message?address='+${address}}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a th:href="@{'/html/user/home?home_key='+${my_home_key}}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
                     <hr style="margin: 5px 0;">
                     <dd><a th:href="@{/html/user/login}" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
+
         </ul>
     </div>
 </div>
@@ -55,7 +49,7 @@
 <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item">
-            <a th:href="@{/html/user/home}">
+            <a th:href="@{'/html/user/home?home_key='+${my_home_key}}">
                 <i class="layui-icon">&#xe609;</i>
                 我的主页
             </a>
@@ -66,7 +60,7 @@
                 用户中心
             </a>
         </li>
-        <li class="layui-nav-item layui-this">
+        <li class="layui-nav-item layui-this layui-bg-blue">
             <a th:href="@{'/html/user/post?address='+${address}}">
                 <i class="layui-icon">&#xe606;</i>
                 我的贴子
@@ -79,7 +73,7 @@
             </a>
         </li>
         <li class="layui-nav-item">
-            <a th:href="@{/html/user/message}">
+            <a th:href="@{'/html/user/message?address='+${address}}">
                 <i class="layui-icon">&#xe611;</i>
                 我的消息
             </a>
@@ -105,39 +99,41 @@
         -->
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span>89</span>）</li>
-                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖（<span>16</span>）</li>
+                <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span th:text="${postList.size()}">89</span>）</li>
+                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖（<span th:text="${colList.size()}">16</span>）</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
-                    <ul class="mine-view jie-row">
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
-                        </li>
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
-                        </li>
-                        <li>
-                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
-                        </li>
-                    </ul>
-                    <div id="LAY_page"></div>
+                    <table id="myPostList" class="layui-hide"  lay-filter="useruv"></table>
+                    <!--<ul class="mine-view jie-row">-->
+                        <!--<li>-->
+                            <!--<a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>-->
+                            <!--<i>2017/3/14 上午8:30:00</i>-->
+                            <!--<a class="mine-edit" href="/jie/edit/8116">编辑</a>-->
+                            <!--<em>661阅/10答</em>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>-->
+                            <!--<i>2017/3/14 上午8:30:00</i>-->
+                            <!--<a class="mine-edit" href="/jie/edit/8116">编辑</a>-->
+                            <!--<em>661阅/10答</em>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>-->
+                            <!--<i>2017/3/14 上午8:30:00</i>-->
+                            <!--<a class="mine-edit" href="/jie/edit/8116">编辑</a>-->
+                            <!--<em>661阅/10答</em>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                    <!--<div id="LAY_page"></div>-->
                 </div>
                 <div class="layui-tab-item">
-                    <ul class="mine-view jie-row">
-                        <li>
-                            <a class="jie-title" th:href="@{/html/jie/detail}" target="_blank">基于 layui 的极简社区页面模版</a>
-                            <i>收藏于23小时前</i>  </li>
-                    </ul>
+                    <table id="myColPostList" class="layui-hide"  lay-filter="useruv1"></table>
+                    <!--<ul class="mine-view jie-row">-->
+                        <!--<li>-->
+                            <!--<a class="jie-title" th:href="@{/html/jie/detail}" target="_blank">基于 layui 的极简社区页面模版</a>-->
+                            <!--<i>收藏于23小时前</i>  </li>-->
+                    <!--</ul>-->
                     <div id="LAY_page1"></div>
                 </div>
             </div>
@@ -146,15 +142,85 @@
 </div>
 
 <div class="fly-footer">
-    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
+    <p><a href="http://fly.layui.com/" target="_blank">智金网社区</a> 2019 &copy; <a href="http://www.layui.com/" target="_blank">zhijin.com 出品</a></p>
     <p>
         <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+        <a href="http://www.layui.com/template/fly/" target="_blank">智金网社区</a>
         <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
     </p>
 </div>
 
+
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script th:src="@{/js/base64.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['form','layer','jquery','table'],function(){
+        var form = layui.form,
+            table = layui.table,
+            layer = parent.layer === undefined ? layui.layer : top.layer
+        $ = layui.jquery;
+
+        var base64change = new Base64();
+        var $address = /*[[${address}]]*/ 'Sebastian';
+        var changeAddress = base64change.encode($address);
+
+        var bodys = document.getElementsByTagName("body")[0];
+        bodys.innerHTML += '<table class="layui-hide" id="test" lay-filter="demo"></' + 'table>' +
+            '<script type="text/html" id="barDemo">' +
+            '  <a class="layui-btn layui-btn-xs layui-bg-blue" lay-event="edit">编辑</' + 'a>' +
+            '</' + 'script>';
+
+        table.render({
+            elem: '#myColPostList'
+            ,height: 472
+            ,url: '/myColListShow?address=' + $address
+            ,page: true
+            ,cols: [
+                [
+                    {field: 'title', title: '贴子标题', width:700}
+                    // ,{field: 'state', title: '状态', width:80}
+                    // ,{field: 'status', title: '结贴', width:80}
+                    ,{field: 'col_time', title: '收藏时间', width:180}
+                    // ,{field: 'sign', title: '操作', width: 177, fixed: 'right',toolbar:"#barDemo"}
+                    // ,{field: 'post_type', title: '操作', width: 177, fixed: 'right',toolbar:"#barDemo"}
+                ]
+            ]
+        });
+
+        table.render({
+            elem: '#myPostList'
+            ,height: 468
+            ,url: '/myPostListShow?address=' + changeAddress
+            ,page: true
+            ,cols: [
+                [
+                    {field: 'title', title: '贴子标题', width:350}
+                    // ,{field: 'state', title: '状态', width:80}
+                    ,{field: 'status', title: '结贴', width:80}
+                    ,{field: 'num', title: '数据', width:120}
+                    ,{field: 'add_time', title: '发表时间', width:180}
+                    // ,{field: 'sign', title: '操作', width: 177, fixed: 'right',toolbar:"#barDemo"}
+                    ,{field: 'post_type', title: '操作', width: 177,toolbar:"#barDemo"}
+                ]
+            ]
+        });
+
+        table.on('tool(useruv)', function (obj) {
+            var data = obj.data
+            if (obj.event === 'edit'){
+                window.location.href="/html/jie/editAdd?post_type="+data.post_type;
+            }
+        //     layer.prompt({
+        //         formType: 2
+        //         ,title: '修改 ID 为 ['+ data.id +'] 的访问量'
+        //         ,value: data.uv
+        //     }, function(value, index){
+        //         EidtUv(data,value,index,obj);
+        })
+
+    })
+</script>
+
 <script>
     layui.cache.page = 'user';
     layui.cache.user = {

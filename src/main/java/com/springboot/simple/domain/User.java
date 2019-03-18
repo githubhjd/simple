@@ -8,6 +8,8 @@ public class User {
     private String grade_name;
     private String personal_note;
     private String profile_photo;
+    private int total;
+    private int day_state;
     private int add_time;
 
     public String getUsername() {
@@ -74,6 +76,22 @@ public class User {
         this.profile_photo = profile_photo;
     }
 
+    public int getDay_state() {
+        return day_state;
+    }
+
+    public void setDay_state(int day_state) {
+        this.day_state = day_state;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -84,6 +102,8 @@ public class User {
                 ", grade_name='" + grade_name + '\'' +
                 ", personal_note='" + personal_note + '\'' +
                 ", profile_photo='" + profile_photo + '\'' +
+                ", total=" + total +
+                ", day_state=" + day_state +
                 ", add_time=" + add_time +
                 '}';
     }

@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -176,11 +177,42 @@ public class UserController {
             return "repass_fail";
         }
     }
-//    @RequestMapping(value = "/user/repass",method = RequestMethod.POST)
-//    public void createShop(Model model, @RequestParam String address, @RequestParam String L_nowpass,
-//                             @RequestParam String L_pass, @RequestParam String L_repass
-//                             ){
-//        System.out.println("address="+address+" L_nowpass="+L_nowpass+" L_pass="+L_pass+"L_repass="+L_repass);
-//    }
+
+    //会员增加等级接口
+    @RequestMapping(value = "/user/addLevel", method = RequestMethod.POST)
+    public Map userAddLevel(String grade_num, String address){
+        Map map = new HashMap();
+        switch (Integer.valueOf(grade_num)){
+            case 1:
+                userDao.updateGradeNumByAddress(100,address);
+                break;
+            case 2:
+                userDao.updateGradeNumByAddress(200,address);
+                break;
+            case 3:
+                userDao.updateGradeNumByAddress(300,address);
+                break;
+            case 4:
+                userDao.updateGradeNumByAddress(400,address);
+                break;
+            case 5:
+                break;
+        }
+        map.put("status",0);
+        return map;
+    }
+
+    //会员签到加积分
+    @RequestMapping(value = "/sign/in", method = RequestMethod.POST)
+    public void userSignIn(String access_address){
+        int day_state = userDao.selectDayStateByAddress(access_address);
+        if (String.valueOf(day_state).equals("0")){
+            System.out.println("+5");
+        }else {
+            System.out.println("已+5");
+        }
+        Map map = new HashMap();
+//        map.put("data",);
+    }
 
 }

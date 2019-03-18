@@ -6,6 +6,9 @@ public class Post {
     private String main_spec;
     private String post_bounty;
     private int add_time;
+    private int status;
+    private int click_num;
+    private int clear_num;
 
     public String getPost_type() {
         return post_type;
@@ -45,5 +48,43 @@ public class Post {
 
     public void setAdd_time(int add_time) {
         this.add_time = add_time;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getClick_num() {
+        return click_num;
+    }
+
+    public void setClick_num(int click_num) {
+        this.click_num = click_num;
+    }
+
+    public int getClear_num() {
+        return clear_num;
+    }
+
+    public void setClear_num(int clear_num) {
+        this.clear_num = clear_num;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "post_type='" + post_type + '\'' +
+                ", title='" + title + '\'' +
+                ", main_spec='" + main_spec + '\'' +
+                ", post_bounty='" + post_bounty + '\'' +
+                ", add_time=" + add_time +
+                ", status=" + status +
+                ", click_num=" + click_num +
+                ", clear_num=" + clear_num +
+                '}';
     }
 }

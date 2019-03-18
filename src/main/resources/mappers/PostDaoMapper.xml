@@ -2,14 +2,110 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.simple.dao.PostDao">
     <insert id="insertPost" parameterType="com.springboot.simple.domain.Post">
-        INSERT INTO `post`(post_type,title,main_spec,post_bounty,add_time) VALUE (#{post_type},#{title},#{main_spec},#{post_bounty},#{add_time})
+        INSERT INTO `post`(post_type,title,main_spec,post_bounty,add_time,status,click_num,clear_time) VALUE (#{post_type},#{title},#{main_spec},#{post_bounty},#{add_time},0,0,0)
     </insert>
 
     <select id="selectByPostTypeAndAddTime" resultType="Map">
         select * from `post` where post_type=#{post_type} AND add_time=#{add_time}
     </select>
 
+    <select id="selectTitleByPostType" resultType="String">
+        select title from `post` where post_type=#{post_type}
+    </select>
+
+    <select id="selectByPostType" resultType="HashMap">
+        select title,post_bounty,add_time,status from `post` where post_type=#{post_type}
+    </select>
+
     <update id="updatePost" parameterType="com.springboot.simple.domain.Post">
         UPDATE `post` SET post_type=#{post_type},title=#{title},main_spec=#{main_spec},post_bounty=#{post_bounty},add_time=#{add_time} WHERE post_type=#{old_post_type}
+    </update>
+
+    <select id="selectByLikePostType" resultType="HashMap">
+        select title,add_time,post_type,status,click_num from `post` where post_type like #{address} order by add_time desc
+    </select>
+
+    <select id="selectByLikePostType3" resultType="HashMap">
+        select title,add_time,post_type,status,click_num,post_bounty from `post` where post_type like #{address} order by add_time desc LIMIT 3
+    </select>
+
+    <select id="selectAllPost" resultType="HashMap">
+        select * from `post` order by add_time desc
+    </select>
+
+    <select id="selectAllOutStandingPost" resultType="HashMap">
+        select * from `post` where `status`=0 order by add_time desc
+    </select>
+
+    <select id="selectAllOverPost" resultType="HashMap">
+        select * from `post` where `status`=1 order by add_time desc
+    </select>
+
+    <select id="selectQuizPost" resultType="HashMap">
+        select * from `post` where post_type like '%000%' order by add_time desc
+    </select>
+
+    <select id="selectOutStandingQuizPost" resultType="HashMap">
+        select * from `post` where post_type like '%000%' and `status`=0 order by add_time desc
+    </select>
+
+    <select id="selectOverQuizPost" resultType="HashMap">
+        select * from `post` where post_type like '%000%' and `status`=1 order by add_time desc
+    </select>
+
+    <select id="selectSharePost" resultType="HashMap">
+        select * from `post` where post_type like '%099%' order by add_time desc
+    </select>
+
+    <select id="selectOutStandingSharePost" resultType="HashMap">
+        select * from `post` where post_type like '%099%' and `status`=0 order by add_time desc
+    </select>
+
+    <select id="selectOverSharePost" resultType="HashMap">
+        select * from `post` where post_type like '%099%' and `status`=1 order by add_time desc
+    </select>
+
+    <select id="selectDiscussPost" resultType="HashMap">
+        select * from `post` where post_type like '%100%' order by add_time desc
+    </select>
+
+    <select id="selectOutStandingDiscussPost" resultType="HashMap">
+        select * from `post` where post_type like '%100%' and `status`=0 order by add_time desc
+    </select>
+
+    <select id="selectOverDiscussPost" resultType="HashMap">
+        select * from `post` where post_type like '%100%' and `status`=1 order by add_time desc
+    </select>
+
+    <select id="selectSuggestPost" resultType="HashMap">
+        select * from `post` where post_type like '%101%' order by add_time desc
+    </select>
+
+    <select id="selectNewsPost" resultType="HashMap">
+        select * from `post` where post_type like '%168%' order by add_time desc
+    </select>
+
+    <select id="selectNoticePost" resultType="HashMap">
+        select * from `post` where post_type like '%169%' order by add_time desc
+    </select>
+
+    <select id="select7PostByAddressOrderTime" resultType="HashMap">
+        SELECT * FROM `post` WHERE post_type like #{address} order by add_time desc LIMIT 7
+    </select>
+
+    <select id="selectTop10" resultType="HashMap">
+        SELECT * FROM post as p INNER JOIN (SELECT post_type,COUNT(*) as num FROM reply GROUP BY post_type ORDER BY num desc) as r WHERE p.post_type = r.post_type ORDER BY p.click_num DESC,r.num DESC
+    </select>
+
+    <select id="select3PostByPostType" resultType="HashMap">
+        SELECT title,post_bounty,status FROM `post` WHERE post_type = #{post_type}
+    </select>
+
+    <update id="updateClickNumByPostTypeAdd" parameterType="com.springboot.simple.domain.Post">
+        update `post` set click_num = click_num+1 where post_type = #{post_type}
+    </update>
+
+    <update id="updateStatusOver" parameterType="com.springboot.simple.domain.Post">
+        update `post` set status = 1, clear_time = #{clear_time} where post_type = #{post_type}
     </update>
 </mapper>

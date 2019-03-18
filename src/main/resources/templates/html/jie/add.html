@@ -11,21 +11,15 @@
   <link rel="stylesheet" th:href="@{/fly-3.0/res/css/global.css}">
 </head>
 <body>
-
+<span id="access_address" style="display:none" th:text="${address}"></span>
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
+      <img th:src="@{/fly-3.0/res/images/zj.png}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">
-        <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+        <a th:href="@{'/html/indexSuc?address='+${address}}"><i class="iconfont icon-jiaoliu"></i>交流</a>
       </li>
     </ul>
     
@@ -62,7 +56,7 @@
         <dl class="layui-nav-child">
           <dd><a th:href="@{'/html/user/set?address='+${address}}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
           <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-          <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <dd><a th:href="@{'/html/user/home?address='+${address}}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
           <dd><a href="" style="text-align: center;">退出</a></dd>
         </dl>
@@ -86,15 +80,51 @@
                 <div class="layui-col-md3">
                   <!--<div class="hide" id="address" th:text="${address}"></div>-->
                   <label class="layui-form-label">所在专栏</label>
-                  <div class="layui-input-block">
-                    <select lay-verify="required" name="class" lay-filter="post_type" id="post_type">
+                  <div class="layui-input-block" th:switch="${grade_num}">
+                    <select lay-verify="required" name="class" lay-filter="post_type" id="post_type" th:case="5">
                       <option></option> 
                       <option value="000">提问</option>
                       <option value="099">分享</option>
                       <option value="100">讨论</option> 
                       <option value="101">建议</option> 
-                      <option value="168">公告</option> 
-                      <option value="169">动态</option> 
+                      <option value="168">公告</option>
+                      <!--<option value="169">动态</option> -->
+                    </select>
+                    <select lay-verify="required" name="class" lay-filter="post_type" id="post_type" th:case="1">
+                      <option></option>
+                      <option value="000">提问</option>
+                      <option value="099">分享</option>
+                      <option value="100">讨论</option>
+                      <option value="101">建议</option>
+                      <!--<option value="168">公告</option>-->
+                      <!--<option value="169">动态</option> -->
+                    </select>
+                    <select lay-verify="required" name="class" lay-filter="post_type" id="post_type" th:case="2">
+                      <option></option>
+                      <option value="000">提问</option>
+                      <option value="099">分享</option>
+                      <option value="100">讨论</option>
+                      <option value="101">建议</option>
+                      <!--<option value="168">公告</option>-->
+                      <!--<option value="169">动态</option> -->
+                    </select>
+                    <select lay-verify="required" name="class" lay-filter="post_type" id="post_type" th:case="3">
+                      <option></option>
+                      <option value="000">提问</option>
+                      <option value="099">分享</option>
+                      <option value="100">讨论</option>
+                      <option value="101">建议</option>
+                      <!--<option value="168">公告</option>-->
+                      <!--<option value="169">动态</option> -->
+                    </select>
+                    <select lay-verify="required" name="class" lay-filter="post_type" id="post_type" th:case="4">
+                      <option></option>
+                      <option value="000">提问</option>
+                      <option value="099">分享</option>
+                      <option value="100">讨论</option>
+                      <option value="101">建议</option>
+                      <!--<option value="168">公告</option>-->
+                      <!--<option value="169">动态</option> -->
                     </select>
                   </div>
                 </div>
@@ -140,7 +170,7 @@
               </div>
               <div class="layui-form-item">
                 <div class="layui-inline">
-                  <label class="layui-form-label">悬赏飞吻</label>
+                  <label class="layui-form-label">悬赏积分</label>
                   <div class="layui-input-inline" style="width: 190px;">
                     <select name="experience" id="post_bounty">
                       <option value="20">20</option>
@@ -150,7 +180,7 @@
                       <option value="80">80</option>
                     </select>
                   </div>
-                  <div class="layui-form-mid layui-word-aux">发表后无法更改飞吻</div>
+                  <div class="layui-form-mid layui-word-aux">发表后无法更改积分值</div>
                 </div>
               </div>
               <!--<div class="layui-form-item">-->
@@ -163,7 +193,7 @@
                 <!--</div>-->
               <!--</div>-->
               <div class="layui-form-item">
-                <button class="layui-btn" lay-filter="post_receive" lay-submit>立即发布</button>
+                <button class="layui-btn layui-bg-blue" lay-filter="post_receive" lay-submit>立即发布</button>
               </div>
             </form>
           </div>
@@ -174,13 +204,14 @@
 </div>
 
 <div class="fly-footer">
-  <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
+  <p><a href="http://fly.layui.com/" target="_blank">智金网社区</a> 2019 &copy; <a href="http://www.layui.com/" target="_blank">zhijin.com 出品</a></p>
   <p>
     <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+    <a href="http://www.layui.com/template/fly/" target="_blank">智金网社区</a>
     <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
   </p>
 </div>
+
 
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
 <script th:src="@{/js/md5.js}"></script>
@@ -208,9 +239,9 @@
         });
 
         function post_receive(data) {
-            var b = new Base64();
+            var base64change = new Base64();
             var $address = /*[[${address}]]*/ 'Sebastian';
-            var a = b.encode($address);
+            var changeAddress = base64change.encode($address);
             var $value = $('#post_type option:selected');
             var $title = $("#L_title");
             var $main_spec = $("#L_content");
@@ -220,17 +251,25 @@
                 url: '/postReceive',
                 data: {
                     address:$.trim($address),
-                    post_type:$.trim($value.val())+a,
+                    post_type:$.trim($value.val())+changeAddress,
                     title:$.trim($title.val()),
                     main_spec:$.trim($main_spec.val()),
                     post_bounty:$.trim($post_bounty.val()),
                 },
                 success:function (data) {
-                      layer.msg("发帖成功！！！", {
-                          time: 1000
-                      },function () {
-                          window.location.href="/html/jie/detail?post_type="+data;
-                      })
+                    if (data === '0') {
+                        layer.msg("发帖失败，您的余额不足以发布此贴！！！", {
+                            time: 1000
+                        },function () {
+                            window.location.reload();
+                        })
+                    }else {
+                        layer.msg("发帖成功！！！", {
+                            time: 1000
+                        },function () {
+                            window.location.href="/html/jie/detail?post_type="+data+"&address="+/*[[${address}]]*/ 'Sebastian';
+                        })
+                    }
                 }
             })
         }

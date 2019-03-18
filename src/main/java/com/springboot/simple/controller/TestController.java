@@ -1,5 +1,6 @@
 package com.springboot.simple.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class TestController {
@@ -18,11 +22,11 @@ public class TestController {
 //    }
 
     // thymeleaf，前端接收后端的数据
-    @GetMapping(value = "/thymeleaf")
-    public String getMessage(Model model){
-        model.addAttribute("message", "This is your message");
-        return "thymeleaf";
-    }
+//    @GetMapping(value = "/thymeleaf")
+//    public String getMessage(Model model){
+//        model.addAttribute("message", "This is your message");
+//        return "thymeleaf";
+//    }
 
 //    @GetMapping(value = "/thymeleaf")
 //    public ModelAndView thymeleaf(){
@@ -208,11 +212,11 @@ public class TestController {
         return modelAndView;
     }
 
-//    @RequestMapping("/html/index")
-//    public ModelAndView htmlIndex(){
-//        ModelAndView modelAndView = new ModelAndView("/html/index");
-//        return modelAndView;
-//    }
+    @RequestMapping("/html/index")
+    public ModelAndView htmlIndex(){
+        ModelAndView modelAndView = new ModelAndView("/html/index");
+        return modelAndView;
+    }
 
     @RequestMapping("/html/case/case")
     public ModelAndView htmlCaseCase(){
@@ -304,11 +308,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/html/user/home")
-    public ModelAndView htmlUserHome(){
-        ModelAndView modelAndView = new ModelAndView("/html/user/home");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/user/home")
+//    public ModelAndView htmlUserHome(){
+//        ModelAndView modelAndView = new ModelAndView("/html/user/home");
+//        return modelAndView;
+//    }
 
 //    @RequestMapping("/html/user/index")
 //    public ModelAndView htmlUserIndex(){
@@ -322,11 +326,11 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping("/html/user/message")
-    public ModelAndView htmlUserMessage(){
-        ModelAndView modelAndView = new ModelAndView("/html/user/message");
-        return modelAndView;
-    }
+//    @RequestMapping("/html/user/message")
+//    public ModelAndView htmlUserMessage(){
+//        ModelAndView modelAndView = new ModelAndView("/html/user/message");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/html/user/reg")
     public ModelAndView htmlUserReg(){

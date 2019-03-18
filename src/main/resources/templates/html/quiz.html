@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>基于 layui 的极简社区页面模版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="fly,layui,前端社区">
+    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+    <link rel="stylesheet" th:href="@{/fly-3.0/res/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/fly-3.0/res/css/global.css}">
+</head>
+<body>
+<span id="access_address" style="display:none" th:text="${address}"></span>
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="/">
+            <img th:src="@{/fly-3.0/res/images/zj.png}" alt="layui">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item layui-this">
+                <a th:href="@{'/html/indexSuc?address='+${address}}"><i class="iconfont icon-jiaoliu"></i>交流</a>
+            </li>
+        </ul>
+
+        <ul class="layui-nav fly-nav-user">
+
+            <!--&lt;!&ndash; 未登入的状态 &ndash;&gt;-->
+            <!--<li class="layui-nav-item">-->
+            <!--<a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>-->
+            <!--</li>-->
+            <!--<li class="layui-nav-item">-->
+            <!--<a th:href="@{/html/user/login}">登入</a>-->
+            <!--</li>-->
+            <!--<li class="layui-nav-item">-->
+            <!--<a th:href="@{/html/user/reg}">注册</a>-->
+            <!--</li>-->
+            <!--<li class="layui-nav-item layui-hide-xs">-->
+            <!--<a th:href="@{/app/qq/}" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>-->
+            <!--</li>-->
+            <!--<li class="layui-nav-item layui-hide-xs">-->
+            <!--<a th:href="@{/app/weibo/}" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>-->
+            <!--</li>-->
+
+            <!-- 登入后的状态 -->
+            <li class="layui-nav-item">
+                <a class="fly-nav-avatar" href="javascript:;">
+                    <!--<cite class="layui-hide-xs">贤心</cite>-->
+                    <cite class="layui-hide-xs" th:text="${username}">无</cite>
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
+                    <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
+                    <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">-->
+                    <img th:src="${profile_photo}">
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{'/html/user/set?address='+${address}}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a th:href="@{/html/user/message}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a th:href="@{/html/user/home}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+                    <hr style="margin: 5px 0;">
+                    <dd><a th:href="@{/html/user/login}" style="text-align: center;">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="fly-panel fly-column">
+    <div class="layui-container">
+        <ul class="layui-clear">
+            <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+            <li class="layui-hide-xs layui-this"><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+            <li><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+            <li><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+            <li><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+            <li><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+            <li><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+            <!-- 用户登入后显示 -->
+            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html#collection">我收藏的贴</a></li>
+        </ul>
+
+        <div class="fly-column-right layui-hide-xs">
+            <span class="fly-search"><i class="layui-icon"></i></span>
+            <a th:href="@{'/html/jie/add?address='+${address}}" class="layui-btn layui-bg-blue">发表新帖</a>
+        </div>
+        <!--<div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;">-->
+            <!--<a href="jie/add.html" class="layui-btn">发表新帖</a>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+
+            <div class="fly-panel" style="margin-bottom: 0;">
+                <div class="layui-tab" lay-filter="demo1">
+                    <div class="fly-panel-title fly-filter" id="MyTab">
+                        <a href="" class="layui-this">综合</a>
+                        <span class="fly-mid"></span>
+                        <a href="">未结</a>
+                        <span class="fly-mid"></span>
+                        <a href="">已结</a>
+                    </div>
+
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <!--返回综合贴子-->
+                            <ul class="fly-list" id="postList"></ul>
+                            <!--综合贴子分页-->
+                            <div id="test1" style="text-align:center"></div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <!--返回未结贴子-->
+                            <ul class="fly-list" id="outStandingPostList"></ul>
+                            <!--未结贴子分页-->
+                            <div id="test2" style="text-align:center"></div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <!--返回已结贴子-->
+                            <ul class="fly-list" id="overPostList"></ul>
+                            <!--已结贴子分页-->
+                            <div id="test3" style="text-align:center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+
+            <div class="fly-panel fly-signin">
+                <div class="fly-panel-title">
+                    签到
+                    <i class="fly-mid"></i>
+                    <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
+                    <i class="fly-mid"></i>
+                    <a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜<span class="layui-badge-dot"></span></a>
+                    <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
+                </div>
+                <div class="fly-panel-main fly-signin-main">
+                    <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
+                    <span>可获得<cite>5</cite>飞吻</span>
+
+                    <!-- 已签到状态 -->
+                    <!--
+                    <button class="layui-btn layui-btn-disabled">今日已签到</button>
+                    <span>获得了<cite>20</cite>飞吻</span>
+                    -->
+                </div>
+            </div>
+
+            <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
+                <h3 class="fly-panel-title">回贴榜</h3>
+                <dl>
+                    <dd th:each="entries,stat:${top12ReplyList}">
+                        <a th:href="@{'/html/user/home?home_key='+${entries['home_key12']}}">
+                            <img th:src="${entries['profile_photo']}"><cite th:text="${entries['username']}">贤心</cite><i th:text="${entries['count']}+'次回答'">106次回答</i>
+                        </a>
+                    </dd>
+                </dl>
+            </div>
+
+            <dl class="fly-panel fly-list-one" >
+                <dt class="fly-panel-title">热议榜</dt>
+                <dd th:each="entries,stat:${top10Post_typeList}">
+                    <a th:href="@{'/html/jie/detail?post_type='+${entries['post_type']}+'&address='+${entries['access_address']}}" th:text="${entries['title']}">基于 layui 的极简社区页面模版</a>
+                    <span><i class="iconfont icon-pinglun1"></i > <span th:text="${entries['count']}">16</span></span>
+                </dd>
+            </dl>
+
+        </div>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
+    <p>
+        <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
+        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+        <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
+    </p>
+</div>
+
+<script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script th:src="@{/js/base64.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['layer','jquery'], function(){
+        var layer = parent.layer === undefined ? layui.layer : top.layer
+        $ = layui.jquery;
+
+
+        var page = 1;
+        var limit = 10;
+        var total = /*[[${resultList.size()}]]*/ 'Sebastian';
+        var address = /*[[${address}]]*/ 'Sebastian';
+        var total1 = /*[[${quizOutStandingPostList.size()}]]*/ 'Sebastian';
+        var total2 = /*[[${quizOverPostList.size()}]]*/ 'Sebastian';
+        var grade_num = /*[[${grade_num}]]*/ 'Sebastian';
+
+
+        $(window).on('load', function () {
+            // 初始化加载数据
+            getInfoToPage();
+        });
+
+        function getInfoToPage() {
+            PostInfo();  // 获取数据
+            toPage(total);   // 进行分页
+            OutPostInfo();  // 获取未结数据
+            OutToPage(total1);   // 进行未结分页
+            OverPostInfo();  // 获取已结数据
+            OverToPage(total2);   // 进行已结分页
+        }
+
+        function PostInfo(){
+            $.ajax({
+                type:"post",
+                url:"/getQuizPostList",
+                data:{
+                    "pageIndex":page,
+                    "pageSize":limit,
+                },
+                success:function (res) {
+                    var jsonObj = eval("("+res+")")
+                    console.log(jsonObj.data);
+                    // var postLists = res.rows;
+                    total = jsonObj.count;
+
+                    var html ='';
+                    for (var i=0;i<jsonObj.data.length;i++){
+                        //默认图片
+                        if (jsonObj.data[i].profile_photo == 0) {
+                            jsonObj.data[i].profile_photo = "https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+                        }
+                        html+='<li>';
+                        html+='<a href="/html/user/home?address='+jsonObj.data[i].address+'" class="fly-avatar">';
+                        html+='<img src="'+jsonObj.data[i].profile_photo+'" alt="贤心">';
+                        html+='</a>';
+                        html+='<h2>';
+                        html+='<a class="layui-badge">'+jsonObj.data[i].type+'</a>';
+                        html+='<a href="/html/jie/detail?post_type='+jsonObj.data[i].post_type+'&address='+address+'">'+jsonObj.data[i].title+'</a>';
+                        html+='</h2>';
+                        html+='<div class="fly-list-info">';
+                        html+='<a href="/html/user/home?address='+jsonObj.data[i].address+'" link>';
+                        html+='<cite>'+jsonObj.data[i].username+'</cite>';
+                        html+='<i class="layui-badge fly-badge-vip">VIP'+jsonObj.data[i].grade_num+'</i>';
+                        html+='</a>';
+                        html+='<span>'+jsonObj.data[i].add_time+'</span>';
+                        html+='<span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i>'+jsonObj.data[i].post_bounty+'</span>';
+                        html+='<span class="fly-list-nums">';
+                        html+='<i class="iconfont icon-pinglun1" title="回答"></i> <span>'+jsonObj.data[i].reply_count+'</span>';
+                        html+='</span></div>';
+                        html+='<div class="fly-list-badge"></div></li><br>';
+                    }
+                    console.log(html);
+                    $("#postList").html(html);
+                }
+            })
+        }
+
+        function toPage(total){
+            //执行一个laypage实例
+            layui.use('laypage', function(){
+                var laypage = layui.laypage;
+                laypage.render({
+                    elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,count: total //数据总数，从服务端得到
+                    ,limit: [10, 25, 50, 100],
+                    // 自定义首页、尾页、上一页、下一页文本
+                    first: '首页',
+                    last: '尾页',
+                    prev: '<em><<</em>',
+                    next: '<em>>></em>',
+                    // 自定义主题
+                    theme: "#FF5722",
+                    // 自定义排版
+                    layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    ,jump: function (obj, first) {
+                        console.log(obj.curr);
+                        console.log(obj.limit);
+                        console.log(obj.count);
+                        page = obj.curr;
+                        limit = obj.limit;
+                        if (!first) {
+                            PostInfo()
+                        }
+                    }
+                });
+            })
+
+        }
+
+        function OutPostInfo(){
+            $.ajax({
+                type:"post",
+                url:"/getOutStandingQuizPost",
+                data:{
+                    "pageIndex":page,
+                    "pageSize":limit,
+                },
+                success:function (res) {
+                    var jsonObj = eval("("+res+")")
+                    console.log(jsonObj.data);
+                    // var postLists = res.rows;
+                    total = jsonObj.count;
+
+                    var html ='';
+                    var b = new Base64();
+                    for (var i=0;i<jsonObj.data.length;i++){
+                        //默认图片
+                        if (jsonObj.data[i].profile_photo == 0) {
+                            jsonObj.data[i].profile_photo = "https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+                        }
+                        html+='<li>';
+                        html+='<a href="/html/user/home?home_key='+b.encode(jsonObj.data[i].address+'&'+address)+'" class="fly-avatar">';
+                        html+='<img src="'+jsonObj.data[i].profile_photo+'" alt="贤心">';
+                        html+='</a>';
+                        html+='<h2>';
+                        html+='<a class="layui-badge">'+jsonObj.data[i].type+'</a>';
+                        html+='<a href="/html/jie/detail?post_type='+jsonObj.data[i].post_type+'&address='+address+'">'+jsonObj.data[i].title+'</a>';
+                        html+='</h2>';
+                        html+='<div class="fly-list-info">';
+                        html+='<a href="/html/user/home?home_key='+b.encode(jsonObj.data[i].address+'&'+address)+'" link>';
+                        html+='<cite>'+jsonObj.data[i].username+'</cite>';
+                        html+='<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>';
+                        html+='<i class="layui-badge fly-badge-vip">VIP'+jsonObj.data[i].grade_num+'</i>';
+                        html+='</a>';
+                        html+='<span>'+jsonObj.data[i].add_time+'</span>';
+                        html+='<span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i>'+jsonObj.data[i].post_bounty+'</span>';
+                        // 判断贴子是否已结
+                        if(jsonObj.data[i].status===1){
+                            html+='<span class="layui-badge fly-badge-accept layui-hide-xs layui-bg-blue">已结</span>';
+                        }
+                        html+='<span class="fly-list-nums">';
+                        html+='<i class="iconfont icon-pinglun1" title="回答"></i> <span>'+jsonObj.data[i].reply_count+'</span>';
+                        html+='</span></div>';
+                        html+='<div class="fly-list-badge"></div></li><br>';
+                    }
+                    // console.log(html);
+                    $("#outStandingPostList").html(html);
+                }
+            })
+        }
+
+        function OutToPage(total1){
+            //执行一个laypage实例
+            layui.use('laypage', function(){
+                var laypage = layui.laypage;
+                laypage.render({
+                    elem: 'test2' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,count: total1 //数据总数，从服务端得到
+                    ,limit: [10, 25, 50, 100],
+                    // 自定义首页、尾页、上一页、下一页文本
+                    first: '首页',
+                    last: '尾页',
+                    prev: '<em><<</em>',
+                    next: '<em>>></em>',
+                    // 自定义主题
+                    theme: "#FF5722",
+                    // 自定义排版
+                    layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    ,jump: function (obj, first) {
+                        console.log(obj.curr);
+                        console.log(obj.limit);
+                        console.log(obj.count);
+                        page = obj.curr;
+                        limit = obj.limit;
+                        if (!first) {
+                            OutPostInfo()
+                        }
+                    }
+                });
+            })
+
+        }
+
+        function OverPostInfo(){
+            $.ajax({
+                type:"post",
+                url:"/getOverQuizPost",
+                data:{
+                    "pageIndex":page,
+                    "pageSize":limit,
+                },
+                success:function (res) {
+                    var jsonObj = eval("("+res+")")
+                    console.log(jsonObj.data);
+                    // var postLists = res.rows;
+                    total = jsonObj.count;
+
+                    var html ='';
+                    var b = new Base64();
+                    for (var i=0;i<jsonObj.data.length;i++){
+                        //默认图片
+                        if (jsonObj.data[i].profile_photo == 0) {
+                            jsonObj.data[i].profile_photo = "https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+                        }
+                        html+='<li>';
+                        html+='<a href="/html/user/home?home_key='+b.encode(jsonObj.data[i].address+'&'+address)+'" class="fly-avatar">';
+                        html+='<img src="'+jsonObj.data[i].profile_photo+'" alt="贤心">';
+                        html+='</a>';
+                        html+='<h2>';
+                        html+='<a class="layui-badge">'+jsonObj.data[i].type+'</a>';
+                        html+='<a href="/html/jie/detail?post_type='+jsonObj.data[i].post_type+'&address='+address+'">'+jsonObj.data[i].title+'</a>';
+                        html+='</h2>';
+                        html+='<div class="fly-list-info">';
+                        html+='<a href="/html/user/home?home_key='+b.encode(jsonObj.data[i].address+'&'+address)+'" link>';
+                        html+='<cite>'+jsonObj.data[i].username+'</cite>';
+                        html+='<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>';
+                        html+='<i class="layui-badge fly-badge-vip">VIP'+jsonObj.data[i].grade_num+'</i>';
+                        html+='</a>';
+                        html+='<span>'+jsonObj.data[i].add_time+'</span>';
+                        html+='<span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i>'+jsonObj.data[i].post_bounty+'</span>';
+                        // 判断贴子是否已结
+                        if(jsonObj.data[i].status===1){
+                            html+='<span class="layui-badge fly-badge-accept layui-hide-xs layui-bg-blue">已结</span>';
+                        }
+                        html+='<span class="fly-list-nums">';
+                        html+='<i class="iconfont icon-pinglun1" title="回答"></i> <span>'+jsonObj.data[i].reply_count+'</span>';
+                        html+='</span></div>';
+                        html+='<div class="fly-list-badge"></div></li><br>';
+                    }
+                    // console.log(html);
+                    $("#overPostList").html(html);
+                }
+            })
+        }
+
+        function OverToPage(total2){
+            //执行一个laypage实例
+            layui.use('laypage', function(){
+                var laypage = layui.laypage;
+                laypage.render({
+                    elem: 'test3' //注意，这里的 test1 是 ID，不用加 # 号
+                    ,count: total2 //数据总数，从服务端得到
+                    ,limit: [10, 25, 50, 100],
+                    // 自定义首页、尾页、上一页、下一页文本
+                    first: '首页',
+                    last: '尾页',
+                    prev: '<em><<</em>',
+                    next: '<em>>></em>',
+                    // 自定义主题
+                    theme: "#FF5722",
+                    // 自定义排版
+                    layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+                    ,jump: function (obj, first) {
+                        console.log(obj.curr);
+                        console.log(obj.limit);
+                        console.log(obj.count);
+                        page = obj.curr;
+                        limit = obj.limit;
+                        if (!first) {
+                            OverPostInfo()
+                        }
+                    }
+                });
+            })
+
+        }
+
+        //layui选项卡的应用
+        $("#MyTab a").click(function () {
+            var num = $(this).index();
+            console.log(num);
+            sessionStorage.setItem("num",num/2);
+        });
+        $(function () {
+            var num = sessionStorage.getItem("num");
+            $("#MyTab a").eq(num).addClass("layui-this").siblings().removeClass("layui-this");
+            $(".layui-tab-content>div").eq(num).addClass("layui-show").siblings().removeClass("layui-show");
+        })
+    });
+
+</script>
+<script>
+    layui.cache.page = '';
+    layui.cache.user = {
+        username: '游客'
+        ,uid: -2
+        ,avatar: '/fly-3.0/res/images/avatar/00.jpg'
+        ,experience: 83
+        ,sex: '男'
+    };
+    layui.config({
+        version: "3.0.0"
+        ,base: '/fly-3.0/res/mods/' //这里实际使用时，建议改成绝对路径
+    }).extend({
+        fly: 'index'
+    }).use('fly');
+</script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
+
+</body>
+</html>

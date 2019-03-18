@@ -142,7 +142,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
               ,'<li class="layui-form-item">'
                 ,'<label class="layui-form-label">URL</label>'
                 ,'<div class="layui-input-inline">'
-                    ,'<input required name="image" placeholder="支持直接粘贴远程图片地址" value="" class="layui-input">'
+                    ,'<input required name="image" id="ImgUrl" placeholder="支持直接粘贴远程图片地址" value="" class="layui-input">'
                   ,'</div>'
                   ,'<button type="button" class="layui-btn layui-btn-primary" id="uploadImg"><i class="layui-icon">&#xe67c;</i>上传图片</button>'
               ,'</li>'
@@ -156,13 +156,16 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
               //执行上传实例
               upload.render({
                 elem: '#uploadImg'
-                ,url: '/api/upload/'
+                ,url: '/uploadImg'
                 ,size: 200
                 ,done: function(res){
                   if(res.status == 0){
                     image.val(res.url);
+                    console.log(res);
                   } else {
                     layer.msg(res.msg, {icon: 5});
+                    console.log(res.data.src);
+                    $('#ImgUrl').val(res.data.src)
                   }
                 }
               });
@@ -282,16 +285,18 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
       if(layui.cache.user.uid !== -1 && elemUser[0]){
         fly.json('/message/nums/', {
           _: new Date().getTime()
+            ,access_address: document.getElementById("access_address").innerHTML
         }, function(res){
           if(res.status === 0 && res.count > 0){
             var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ res.count +'</a>');
             elemUser.append(msg);
             msg.on('click', function(){
-              fly.json('/message/read', {}, function(res){
-                if(res.status === 0){
-                  location.href = '/user/message/';
-                }
-              });
+              // fly.json('/message/read', {}, function(res){
+              //   if(res.status === 0){
+              //     location.href = '/user/message/';
+              //   }
+              // });
+                location.href = '/html/user/message?address='+res.access_address;
             });
             layer.tips('你有 '+ res.count +' 条未读消息', msg, {
               tips: 3
@@ -332,7 +337,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   ,elemSigninTop = $('#LAY_signinTop')
   ,elemSigninMain = $('.fly-signin-main')
   ,elemSigninDays = $('.fly-signin-days');
-  
+
   if(elemSigninMain[0]){
     /*
     fly.json('/sign/status', function(res){
@@ -348,6 +353,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
 
     fly.json('/sign/in', {
       token: signRender.token || 1
+        ,access_address: document.getElementById("access_address").innerHTML
     }, function(res){
       signRender(res.data);
     }, {
@@ -489,7 +495,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
 
 
   //搜索
-  $('.fly-search').on('click', function(){
+  $('.fly-search').on('click', function(){cnzz_protocol
     layer.open({
       type: 1
       ,title: false
@@ -609,11 +615,11 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
   //固定Bar
   util.fixbar({
     bar1: '&#xe642;'
-    ,bgcolor: '#009688'
+    ,bgcolor: '#00BFFF'
     ,click: function(type){
       if(type === 'bar1'){
-        layer.msg('打开 index.js，开启发表新帖的路径');
-        //location.href = 'jie/add.html';
+        // layer.msg('打开 index.js，开启发表新帖的路径');
+        location.href = '/html/jie/add?address='+document.getElementById("access_address").innerHTML;
       }
     }
   });

@@ -11,21 +11,16 @@
   <link rel="stylesheet" th:href="@{/fly-3.0/res/css/global.css}">
 </head>
 <body>
-
+<span id="access_address" style="display:none" th:text="${address}"></span>
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
+      <img th:src="@{/fly-3.0/res/images/zj.png}" alt="layui">
     </a>
+
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">
-        <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+        <a th:href="@{'/html/indexSuc?address='+${address}}"><i class="iconfont icon-jiaoliu"></i>交流</a>
       </li>
     </ul>
     
@@ -41,9 +36,9 @@
           <img th:src="${profile_photo}">
         </a>
         <dl class="layui-nav-child">
-          <dd><a th:href="@{/html/user/set}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-          <dd><a th:href="@{/html/user/message}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-          <dd><a th:href="@{/html/user/home}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <dd><a th:href="@{'/html/user/set?address='+${address}}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a th:href="@{'/html/user/message?address='+${address}}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+          <dd><a th:href="@{'/html/user/home?home_key='+${my_home_key}}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
           <dd><a th:href="@{/html/user/login}" style="text-align: center;">退出</a></dd>
         </dl>
@@ -55,12 +50,12 @@
 <div class="layui-container fly-marginTop fly-user-main">
   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/home}">
+      <a th:href="@{'/html/user/home?home_key='+${my_home_key}}">
         <i class="layui-icon">&#xe609;</i>
         我的主页
       </a>
     </li>
-    <li class="layui-nav-item layui-this">
+    <li class="layui-nav-item">
       <a th:href="@{'/html/user/index?address='+${address}}">
         <i class="layui-icon">&#xe612;</i>
         用户中心
@@ -79,12 +74,13 @@
       </a>
     </li>
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/message}">
+      <a th:href="@{'/html/user/message?address='+${address}}">
         <i class="layui-icon">&#xe611;</i>
         我的消息
       </a>
     </li>
   </ul>
+
 
   <div class="site-tree-mobile layui-hide">
     <i class="layui-icon">&#xe602;</i>
@@ -115,60 +111,167 @@
           </div>
         </div>
       </div>
-    </div>
+      <div class="layui-col-md8" id="user_level">
+        <!--<img style="margin-left: 25px" th:src="@{/vipImg/vip2.png}" height="144" width="144"/>-->
+        <!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">-->
+          <!--<legend>已符合</legend>-->
+        <!--</fieldset>-->
 
-    <div class="layui-tab layui-tab-brief" lay-filter="user">
-      <ul class="layui-tab-title" id="LAY_mine">
-        <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span>89</span>）</li>
-        <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖（<span>16</span>）</li>
-      </ul>
-      <div class="layui-tab-content" style="padding: 20px 0;">
-        <div class="layui-tab-item layui-show">
-          <ul class="mine-view jie-row">
-            <li>
-              <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-              <i>2017/3/14 上午8:30:00</i>
-              <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-              <em>661阅/10答</em>
-            </li>
-            <li>
-              <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-              <i>2017/3/14 上午8:30:00</i>
-              <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-              <em>661阅/10答</em>
-            </li>
-            <li>
-              <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
-              <i>2017/3/14 上午8:30:00</i>
-              <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-              <em>661阅/10答</em>
-            </li>
-          </ul>
-          <div id="LAY_page"></div>
-        </div>
-        <div class="layui-tab-item">
-          <ul class="mine-view jie-row">
-            <li>
-              <a class="jie-title" th:href="@{/html/jie/detail}" target="_blank">基于 layui 的极简社区页面模版</a>
-              <i>收藏于23小时前</i>  </li>
-          </ul>
-          <div id="LAY_page1"></div>
-        </div>
+        <!--<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">-->
+          <!--<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>-->
+        <!--</div>-->
+
+        <!--<div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">-->
+          <!--<button class="layui-btn site-demo-active" data-type="setPercent">设置50%</button>-->
+        <!--</div>-->
       </div>
     </div>
+
   </div>
 </div>
 
 <div class="fly-footer">
-  <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
+  <p><a href="http://fly.layui.com/" target="_blank">智金网社区</a> 2019 &copy; <a href="http://www.layui.com/" target="_blank">zhijin.com 出品</a></p>
   <p>
     <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+    <a href="http://www.layui.com/template/fly/" target="_blank">智金网社区</a>
     <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
   </p>
 </div>
 
+
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['element','fly','form'], function(){
+        var $ = layui.jquery
+            ,fly = layui.fly
+            ,form = layui.form
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        function GetPercent(num, total) {
+            /// <summary>
+            /// 求百分比
+            /// </summary>
+            /// <param name="num">当前数</param>
+            /// <param name="total">总数</param>
+            num = parseFloat(num);
+            total = parseFloat(total);
+            if (isNaN(num) || isNaN(total)) {
+                return "-";
+            }
+            return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00)+"%";
+        }
+
+        $(window).on('load', function () {
+            // 初始化加载数据
+            getUserLevel();
+        });
+
+        function getUserLevel() {
+            var html = '';
+            html+='<img style="margin-left: 25px" id="myImage" src="/vipImg/vip2.png" height="144" width="144"/>';
+            html+='<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">';
+            html+='<legend >等级/积分值</legend>';
+            html+='</fieldset>';
+            html+='<div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="demo">';
+            html+='<div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>';
+            html+='</div>';
+            html+='<span id="span_id" ></span>';
+            html+='<div class="site-demo-button" style="margin-top: 20px; margin-bottom: 0;">';
+            html+='<button class="layui-btn site-demo-active layui-bg-blue" data-type="setPercent" id="addLevel">升级</button>';
+            html+='</div>';
+            $("#user_level").html(html);
+            var grade_num = /*[[${grade_num}]]*/ 'Sebastian';
+            var total = /*[[${total}]]*/ 'Sebastian';
+            var precent = '';
+            var pre_result;
+            switch (grade_num) {
+                case 1:
+                    precent = GetPercent(total,100);
+                    pre_result = total/100;
+                    if (pre_result >= 1) {
+                        precent = "100%";
+                    }
+                    $('#span_id').html(total+"/100");
+                    document.getElementById("myImage").src="/vipImg/vip1.png";
+                    break;
+                case 2:
+                    precent = GetPercent(total,200);
+                    pre_result = total/200;
+                    if (pre_result >= 1) {
+                        precent = "100%";
+                    }
+                    document.getElementById("myImage").src="/vipImg/vip2.png";
+                    $('#span_id').html(total+"/200");
+                    break;
+                case 3:
+                    precent = GetPercent(total,300);
+                    pre_result = total/300;
+                    if (pre_result >= 1) {
+                        precent = "100%";
+                    }
+                    document.getElementById("myImage").src="/vipImg/vip3.png";
+                    $('#span_id').html(total+"/300");
+                    break;
+                case 4:
+                    precent = GetPercent(total,400);
+                    pre_result = total/300;
+                    if (pre_result >= 1) {
+                        precent = "100%";
+                    }
+                    document.getElementById("myImage").src="/vipImg/vip4.png";
+                    $('#span_id').html(total+"/400");
+                    break;
+                case 5:
+                    precent = "100%";
+                    html = '<img style="margin-left: 25px" src="/vipImg/vip5.png" height="144" width="144"/>';
+                    html+='<div><span style="margin-left: 15px">您的等级已经是智金网的最高级</span></div>';
+                    $("#user_level").html(html);
+                    break;
+            }
+            element.progress('demo', precent);
+            // layer.msg(precent);
+
+            $(document).on('click','#addLevel',function () {
+                if (precent == "100%"){
+                    // layer.msg("success");
+                    fly.json('/user/addLevel',{
+                        grade_num: grade_num
+                        ,address: /*[[${address}]]*/ 'Sebastian'
+                    },function (res) {
+                        if (res.status === 0){
+                            window.location.reload()
+                        }
+                        // window.location.reload()
+                    })
+                }else {
+                    layer.msg("您的飞吻值不足以升级！！！")
+                }
+            });
+
+        }
+
+
+
+        //触发事件
+        var active = {
+            setPercent: function(){
+                // //设置50%进度
+                // element.progress('demo', '50%')
+                if (precent == '100%'){
+                    layer.msg("success");
+                }else {
+                    layer.msg("您的飞吻值不足以升级！！！")
+                }
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = $(this).data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+    });
+</script>
 <script>
 layui.cache.page = 'user';
 layui.cache.user = {

@@ -142,11 +142,14 @@ layui.define('fly', function(exports){
       fly.json('/api/jieda-zan/', {
         ok: ok
         ,id: li.data('id')
+          ,reply_address64: document.getElementById("reply_address64").innerHTML
+          ,access_address: document.getElementById("access_address").innerHTML
       }, function(res){
         if(res.status === 0){
           var zans = othis.find('em').html()|0;
           othis[ok ? 'removeClass' : 'addClass']('zanok');
           othis.find('em').html(ok ? (--zans) : (++zans));
+          layer.msg(res.msg);
         } else {
           layer.msg(res.msg);
         }
@@ -165,6 +168,10 @@ layui.define('fly', function(exports){
         layer.close(index);
         fly.json('/api/jieda-accept/', {
           id: li.data('id')
+            ,post_type: document.getElementById("accrssed_post_type").innerHTML
+            ,reply_address64: document.getElementById("reply_address64").innerHTML
+            ,access_address: document.getElementById("access_address").innerHTML
+            ,post_bounty: document.getElementById("post_bounty").innerHTML
         }, function(res){
           if(res.status === 0){
             $('.jieda-accept').remove();

@@ -12,12 +12,36 @@
         select IFNULL (MAX(password), 0) AS password from `user` where address=#{address}
     </select>
 
+    <select id="selectUsernameByAddress" resultType="String" parameterType="String">
+        select IFNULL (MAX(username), 0) AS username from `user` where address=#{address}
+    </select>
+
     <select id="selectByUsername" resultType="Map" parameterType="String">
         select * from `user` where username=#{username}
     </select>
 
     <select id="selectByAddress" resultType="Map" parameterType="String">
         select * from `user` where address=#{address}
+    </select>
+
+    <select id="selectDayStateByAddress" resultType="int" parameterType="String">
+        select day_state from `user` where address=#{address}
+    </select>
+
+    <select id="selectUserVip5" resultType="HashMap">
+        SELECT username,address,profile_photo FROM `user` WHERE grade_num=5
+    </select>
+    
+    <select id="selectNameGradePhotoByAddress" resultType="Map" parameterType="String">
+        SELECT username,grade_num,IFNULL(profile_photo,0),address FROM `user` WHERE address=#{address}
+    </select>
+
+    <select id="selectUsernameAndGradeNumByAddress" resultType="Map" parameterType="String">
+        SELECT username,IFNULL(grade_num,0) FROM `user` WHERE address=#{address}
+    </select>
+
+    <select id="selectTotalByAddress" resultType="int">
+        SELECT total FROM `user` WHERE address=#{address}
     </select>
 
     <insert id="insertUser" parameterType="com.springboot.simple.domain.User">
@@ -34,6 +58,18 @@
 
     <update id="updateUserProfilePhoto" parameterType="com.springboot.simple.domain.User">
         UPDATE `user` SET profile_photo=#{profile_photo} WHERE address=#{address}
+    </update>
+
+    <update id="updateUserTotalAdd" parameterType="com.springboot.simple.domain.User">
+        UPDATE `user` SET total=total+${bounty} WHERE address='${address}'
+    </update>
+
+    <update id="updateUserTotalSub" parameterType="com.springboot.simple.domain.User">
+        UPDATE `user` SET total=total-${bounty} WHERE address='${address}'
+    </update>
+
+    <update id="updateGradeNumByAddress" parameterType="com.springboot.simple.domain.User">
+        UPDATE `user` SET grade_num=grade_num+1,total=total-${bounty} WHERE address='${address}'
     </update>
 
 </mapper>

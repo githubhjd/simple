@@ -346,6 +346,7 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function(exports){
       layer.confirm('确定清空吗？', function(index){
         fly.json('/message/remove/', {
           all: true
+            ,access_address: document.getElementById("access_address").innerHTML
         }, function(res){
           if(res.status === 0){
             layer.close(index);

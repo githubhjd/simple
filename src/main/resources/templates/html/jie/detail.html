@@ -12,21 +12,15 @@
   <link rel="stylesheet" th:href="@{/fly-3.0/res/css/global.css}">
 </head>
 <body>
-
+<span id="access_address" style="display:none" th:text="${address}"></span>
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
+      <img th:src="@{/fly-3.0/res/images/zj.png}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">
-        <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+        <a th:href="@{'/html/indexSuc?address='+${address}}"><i class="iconfont icon-jiaoliu"></i>交流</a>
       </li>
     </ul>
     
@@ -65,7 +59,7 @@
           <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
           <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
-          <dd><a href="" style="text-align: center;">退出</a></dd>
+          <dd><a th:href="@{/html/user/login}" style="text-align: center;">退出</a></dd>
         </dl>
       </li>
     </ul>
@@ -74,29 +68,99 @@
 
 <div class="layui-hide-xs">
   <div class="fly-panel fly-column">
-    <div class="layui-container">
-      <ul class="layui-clear">
-        <li class="layui-hide-xs"><a href="/">首页</a></li> 
-        <li class="layui-this"><a href="">提问</a></li> 
-        <li><a href="">分享<span class="layui-badge-dot"></span></a></li> 
-        <li><a href="">讨论</a></li> 
-        <li><a href="">建议</a></li> 
-        <li><a href="">公告</a></li> 
-        <li><a href="">动态</a></li> 
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li> 
-        
+    <div class="layui-container" th:switch="${type}">
+      <ul class="layui-clear" th:case="000">
+        <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+        <li class="layui-hide-xs layui-this"><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+        <li><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+        <li><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+        <li><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+        <li><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+        <li><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
         <!-- 用户登入后显示 -->
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="../user/index.html">我发表的贴</a></li> 
-        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="../user/index.html#collection">我收藏的贴</a></li> 
-      </ul> 
-      
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}+'#collection'}">我收藏的贴</a></li>
+      </ul>
+      <ul class="layui-clear" th:case="099">
+        <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+        <li><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+        <li class="layui-hide-xs layui-this"><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+        <li><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+        <li><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+        <li><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+        <li><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+        <!-- 用户登入后显示 -->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}+'#collection'}">我收藏的贴</a></li>
+      </ul>
+      <ul class="layui-clear" th:case="100">
+        <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+        <li><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+        <li><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+        <li class="layui-hide-xs layui-this"><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+        <li><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+        <li><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+        <li><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+        <!-- 用户登入后显示 -->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}+'#collection'}">我收藏的贴</a></li>
+      </ul>
+      <ul class="layui-clear" th:case="101">
+        <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+        <li><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+        <li><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+        <li><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+        <li class="layui-hide-xs layui-this"><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+        <li><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+        <li><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+        <!-- 用户登入后显示 -->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}+'#collection'}">我收藏的贴</a></li>
+      </ul>
+      <ul class="layui-clear" th:case="168">
+        <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+        <li><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+        <li><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+        <li><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+        <li><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+        <li class="layui-hide-xs layui-this"><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+        <li><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+        <!-- 用户登入后显示 -->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}+'#collection'}">我收藏的贴</a></li>
+      </ul>
+      <ul class="layui-clear" th:case="169">
+        <li><a th:href="@{'/html/indexSuc?address='+${address}}">首页</a></li>
+        <li><a th:href="@{'/html/quiz?address='+${address}}">提问</a></li>
+        <li><a th:href="@{'/html/share?address='+${address}}">分享<span class="layui-badge-dot"></span></a></li>
+        <li><a th:href="@{'/html/discuss?address='+${address}}">讨论</a></li>
+        <li><a th:href="@{'/html/suggest?address='+${address}}">建议</a></li>
+        <li><a th:href="@{'/html/news?address='+${address}}">公告</a></li>
+        <li class="layui-hide-xs layui-this"><a th:href="@{'/html/notice?address='+${address}}">动态</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+
+        <!-- 用户登入后显示 -->
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}}">我发表的贴</a></li>
+        <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a th:href="@{'/html/user/post?address='+${address}+'#collection'}">我收藏的贴</a></li>
+      </ul>
+
       <div class="fly-column-right layui-hide-xs"> 
         <span class="fly-search"><i class="layui-icon"></i></span>
         <a th:href="@{'/html/jie/add?address='+${address}}" class="layui-btn">发表新帖</a>
       </div> 
       <div class="layui-hide-sm layui-show-xs-block" style="margin-top: -10px; padding-bottom: 10px; text-align: center;"> 
         <a href="/html/jie/add" class="layui-btn">发表新帖</a>
-      </div> 
+      </div>
     </div>
   </div>
 </div>
@@ -126,26 +190,34 @@
             <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
           </div>
           <span class="fly-list-nums"> 
-            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
-            <i class="iconfont" title="人气">&#xe60b;</i> 99999
+              <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> <a th:text="${replyList.size()}">66</a></a>
+            <i class="iconfont" title="人气" >&#xe60b;</i> <span th:text="${click_num}">99999</span>
           </span>
         </div>
         <div class="detail-about">
           <a class="fly-avatar" href="../user/home.html">
             <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">-->
-            <img th:src="${profile_photo}">
+            <img th:src="${post_profile_photo}">
           </a>
           <div class="fly-detail-user">
             <a href="../user/home.html" class="fly-link">
-              <cite th:text="${username}">贤心</cite>
+              <cite th:text="${post_username}">贤心</cite>
               <i class="iconfont icon-renzheng" title="认证信息：{{ rows.user.approve }}"></i>
-              <i class="layui-badge fly-badge-vip" th:text="VIP+${grade_num}">VIP3</i>
+              <i class="layui-badge fly-badge-vip" th:text="VIP+${post_grade_num}">VIP3</i>
             </a>
             <span>2017-11-30</span>
           </div>
-          <div class="detail-hits" id="LAY_jieAdmin" data-id="123">
+          <div class="detail-hits" id="LAY_jieAdmin" data-id="123" th:switch="${user_status}">
             <span style="padding-right: 10px; color: #FF7200" th:text="悬赏+'：'+${post_bounty}+飞吻">悬赏：60飞吻</span>
-            <span class="layui-btn layui-btn-xs jie-admin" type="edit"><a th:href="@{'/html/jie/editAdd?post_type='+${post_type}}">编辑此贴</a></span>
+            <span th:case="m" class="layui-btn layui-bg-blue layui-btn-xs jie-admin" type="edit">
+              <a th:href="@{'/html/jie/editAdd?post_type='+${post_type}}">编辑此贴</a>
+            </span>
+            <span th:case="c" class="layui-btn layui-btn-xs jie-admin">
+                <a id="col">收藏</a>
+            </span>
+            <span th:case="y" class="layui-badge" style="background-color: #999;">
+              已收藏
+            </span>
           </div>
         </div>
         <div class="detail-body photos" th:utext="${main_spec}">
@@ -178,85 +250,102 @@
           <legend>回帖</legend>
         </fieldset>
 
-        <ul class="jieda" id="jieda">
-          <li data-id="111" class="jieda-daan">
+        <ul class="jieda" id="jieda" th:each="entries,stat:${replyList}">
+          <!--<li data-id="111" class="jieda-daan">-->
+            <!--<a name="item-1111111111"></a>-->
+            <!--<div class="detail-about detail-about-reply">-->
+              <!--<a class="fly-avatar" href="">-->
+                <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">-->
+              <!--</a>-->
+              <!--<div class="fly-detail-user">-->
+                <!--<a href="" class="fly-link">-->
+                  <!--<cite>贤心</cite>-->
+                  <!--<i class="iconfont icon-renzheng" title="认证信息：XXX"></i>-->
+                  <!--<i class="layui-badge fly-badge-vip">VIP3</i>              -->
+                <!--</a>-->
+                <!---->
+                <!--<span>(楼主)</span>-->
+                <!--&lt;!&ndash;-->
+                <!--<span style="color:#5FB878">(管理员)</span>-->
+                <!--<span style="color:#FF9E3F">（社区之光）</span>-->
+                <!--<span style="color:#999">（该号已被封）</span>-->
+                <!--&ndash;&gt;-->
+              <!--</div>-->
+
+              <!--<div class="detail-hits">-->
+                <!--<span>2017-11-30</span>-->
+              <!--</div>-->
+
+              <!--<i class="iconfont icon-caina" title="最佳答案"></i>-->
+            <!--</div>-->
+            <!--<div class="detail-body jieda-body photos">-->
+              <!--<p>香菇那个蓝瘦，这是一条被采纳的回帖</p>-->
+            <!--</div>-->
+            <!--<div class="jieda-reply">-->
+              <!--<span class="jieda-zan zanok" type="zan">-->
+                <!--<i class="iconfont icon-zan"></i>-->
+                <!--<em>66</em>-->
+              <!--</span>-->
+              <!--<span type="reply">-->
+                <!--<i class="iconfont icon-svgmoban53"></i>-->
+                <!--回复-->
+              <!--</span>-->
+              <!--<div class="jieda-admin">-->
+                <!--<span type="edit">编辑</span>-->
+                <!--<span type="del">删除</span>-->
+                <!--&lt;!&ndash; <span class="jieda-accept" type="accept">采纳</span> &ndash;&gt;-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</li>-->
+
+          <li th:data-id="${entries['reply_id']}" >
+            <span id="reply_address64" style="display:none" th:text="${entries['reply_address64']}"></span>
+            <span id="access_address" style="display:none" th:text="${address}"></span>
+            <span id="accrssed_post_type" style="display:none" th:text="${post_type}"></span>
+            <span id="post_bounty" style="display:none" th:text="${post_bounty}"></span>
             <a name="item-1111111111"></a>
             <div class="detail-about detail-about-reply">
-              <a class="fly-avatar" href="">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
+              <a class="fly-avatar" th:href="@{'/html/user/home?address='+${entries['reply_address64']}}">
+                <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">-->
+                <img th:src="${entries['profile_photo']}" alt=" ">
               </a>
               <div class="fly-detail-user">
                 <a href="" class="fly-link">
-                  <cite>贤心</cite>
-                  <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                  <i class="layui-badge fly-badge-vip">VIP3</i>              
+                  <cite th:text="${entries['username']}">贤心</cite>
                 </a>
-                
-                <span>(楼主)</span>
-                <!--
-                <span style="color:#5FB878">(管理员)</span>
-                <span style="color:#FF9E3F">（社区之光）</span>
-                <span style="color:#999">（该号已被封）</span>
-                -->
               </div>
-
               <div class="detail-hits">
-                <span>2017-11-30</span>
+                <span th:text="${entries['add_time']}">2017-11-30</span>
               </div>
-
-              <i class="iconfont icon-caina" title="最佳答案"></i>
+              <div th:switch="${entries['status']}">
+                <div th:case="0"></div>
+                <div th:case="1"><i class="iconfont icon-caina" title="最佳答案"></i></div>
+              </div>
             </div>
             <div class="detail-body jieda-body photos">
-              <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
+              <p th:text="${entries['reply_main_spec']}">蓝瘦那个香菇，这是一条没被采纳的回帖</p>
             </div>
-            <div class="jieda-reply">
-              <span class="jieda-zan zanok" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>66</em>
+            <div class="jieda-reply" th:switch="${entries['IsZan']}">
+              <span th:case="zanOk" class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-zan "></i>
+                <em th:text="${entries['like_num']}">0</em>
+              </span>
+              <span th:case="zan" class="jieda-zan" type="zan">
+                <i class="iconfont icon-zan "></i>
+                <em th:text="${entries['like_num']}">0</em>
               </span>
               <span type="reply">
                 <i class="iconfont icon-svgmoban53"></i>
                 回复
               </span>
-              <div class="jieda-admin">
-                <span type="edit">编辑</span>
-                <span type="del">删除</span>
-                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
-              </div>
-            </div>
-          </li>
-          
-          <li data-id="111">
-            <a name="item-1111111111"></a>
-            <div class="detail-about detail-about-reply">
-              <a class="fly-avatar" href="">
-                <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt=" ">
-              </a>
-              <div class="fly-detail-user">
-                <a href="" class="fly-link">
-                  <cite>贤心</cite>       
-                </a>
-              </div>
-              <div class="detail-hits">
-                <span>2017-11-30</span>
-              </div>
-            </div>
-            <div class="detail-body jieda-body photos">
-              <p>蓝瘦那个香菇，这是一条没被采纳的回帖</p>
-            </div>
-            <div class="jieda-reply">
-              <span class="jieda-zan" type="zan">
-                <i class="iconfont icon-zan"></i>
-                <em>0</em>
-              </span>
-              <span type="reply">
-                <i class="iconfont icon-svgmoban53"></i>
-                回复
-              </span>
-              <div class="jieda-admin">
-                <span type="edit">编辑</span>
-                <span type="del">删除</span>
-                <span class="jieda-accept" type="accept">采纳</span>
+              <div class="jieda-admin" th:switch="${entries['reply_user_status']}">
+                <div th:case="take">
+                  <span class="jieda-accept" type="accept">采纳</span>
+                </div>
+                <div th:case="no_take"></div>
+                <!--<span type="edit">编辑</span>-->
+                <!--<span type="del">删除</span>-->
+                <!--<span class="jieda-accept" type="accept">采纳</span>-->
               </div>
             </div>
           </li>
@@ -266,7 +355,7 @@
         </ul>
         
         <div class="layui-form layui-form-pane">
-          <form action="/jie/reply/" method="post">
+          <form action="" method="post">
             <div class="layui-form-item layui-form-text">
               <a name="comment"></a>
               <div class="layui-input-block">
@@ -275,7 +364,7 @@
             </div>
             <div class="layui-form-item">
               <input type="hidden" name="jid" value="123">
-              <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
+              <button class="layui-btn layui-bg-blue" lay-filter="post_reply" lay-submit>提交回复</button>
             </div>
           </form>
         </div>
@@ -350,15 +439,82 @@
 </div>
 
 <div class="fly-footer">
-  <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
+  <p><a href="http://fly.layui.com/" target="_blank">智金网社区</a> 2019 &copy; <a href="http://www.layui.com/" target="_blank">zhijin.com 出品</a></p>
   <p>
     <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+    <a href="http://www.layui.com/template/fly/" target="_blank">智金网社区</a>
     <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
   </p>
 </div>
 
+
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script th:src="@{/js/base64.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+  layui.use(['form','layer','jquery','upload'],function () {
+      var form = layui.form,
+          upload = layui.upload,
+          layer = parent.layer === undefined ? layui.layer : top.layer,
+          $ = layui.jquery;
+
+      //回帖
+      form.on("submit(post_reply)", function (data) {
+          $(this).text("回复中...").attr("disabled","disabled").addClass("layui-disabled");
+          post_reply(data);
+          return false;
+      });
+
+      function post_reply(data) {
+          var post_type = /*[[${post_type}]]*/ 'Sebastian';
+          var $reply_main_spec = $("#L_content");
+          var b = new Base64();
+          var $address = /*[[${address}]]*/ 'Sebastian';
+          var a = b.encode($address);
+          $.ajax({
+              type: 'post',
+              url: '/addReply',
+              data: {
+                  post_type:$.trim(post_type),
+                  reply_main_spec:$.trim($reply_main_spec.val()),
+                  address:a
+              },
+              success:function (data) {
+                  layer.msg("回复成功！！！", {
+                      time: 1000
+                  },function () {
+                      window.location.href="/html/jie/detail?post_type="+data+"&address="+/*[[${address}]]*/ 'Sebastian';
+                  })
+              }
+          })
+      }
+
+      $('#col').click(function () {
+          addCol();
+      });
+
+      function addCol() {
+          var col_post_type = /*[[${post_type}]]*/ 'Sebastian';
+          var address = /*[[${address}]]*/ 'Sebastian';
+          $.ajax({
+              type: 'post',
+              url: '/addCol',
+              data: {
+                  col_post_type:$.trim(col_post_type),
+                  address:$.trim(address)
+              },
+              success:function (data) {
+                  layer.msg("收藏成功！！！", {
+                      time: 1000
+                  },function () {
+                      window.location.href="/html/jie/detail?post_type="+data+"&address="+/*[[${address}]]*/ 'Sebastian';
+                      // window.location.href="/html/user/post?address="+/*[[${address}]]*/ 'Sebastian';
+                  })
+              }
+          })
+      }
+
+  })
+</script>
 <script>
     layui.use('code', function(){ //加载code模块
         layui.code(); //引用code方法

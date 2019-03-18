@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springboot.simple.dao.ReplyDao">
+    <insert id="InsertReply" parameterType="com.springboot.simple.domain.Reply">
+        INSERT INTO `reply`(post_type,reply_main_spec,status,like_num,add_time,reply_address) VALUE (#{post_type},#{reply_main_spec},#{status},#{like_num},#{add_time},#{reply_address})
+    </insert>
+
+    <select id="selectByPostType" resultType="HashMap">
+        select * from `reply` where post_type=#{post_type} order by add_time desc
+    </select>
+
+    <update id="updateStatusReplyById">
+        UPDATE reply SET `status`=1 WHERE reply_id=#{reply_id}
+    </update>
+
+    <update id="updateLikeNumReplyByIdAdd">
+        UPDATE reply SET like_num=like_num+1 WHERE reply_id=#{reply_id}
+    </update>
+
+    <update id="updateLikeNumReplyByIdSub">
+        UPDATE reply SET like_num=like_num-1 WHERE reply_id=#{reply_id}
+    </update>
+
+    <select id="select3ByAddress" resultType="HashMap">
+        SELECT * FROM reply WHERE reply_address=#{reply_address} order by add_time desc LIMIT 3
+    </select>
+
+    <select id="selectCountReplyByPostType" resultType="int">
+        SELECT COUNT(*) as num FROM reply WHERE post_type = #{post_type}
+    </select>
+
+    <select id="selectCountTop12" resultType="HashMap">
+        SELECT reply_address,COUNT(reply_id) as count FROM reply GROUP BY reply_address ORDER BY count DESC LIMIT 12
+    </select>
+
+    <select id="selectCountTop10" resultType="HashMap">
+        SELECT post_type,COUNT(reply_id) as count FROM reply GROUP BY post_type ORDER BY count DESC LIMIT 10
+    </select>
+
+    <select id="selectCountTop4" resultType="HashMap">
+        SELECT post_type,COUNT(reply_id) as count FROM reply GROUP BY post_type ORDER BY count DESC LIMIT 4
+    </select>
+
+</mapper>

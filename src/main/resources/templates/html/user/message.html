@@ -15,17 +15,11 @@
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img th:src="@{/fly-3.0/res/images/logo.png}" alt="layui">
+      <img th:src="@{/fly-3.0/res/images/zj.png}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">
-        <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-      </li>
-      <li class="layui-nav-item">
-        <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+        <a th:href="@{'/html/indexSuc?address='+${address}}"><i class="iconfont icon-jiaoliu"></i>交流</a>
       </li>
     </ul>
     
@@ -33,17 +27,18 @@
       <!-- 登入后的状态 -->
       <li class="layui-nav-item">
         <a class="fly-nav-avatar" href="javascript:;">
-          <cite class="layui-hide-xs">贤心</cite>
+          <cite class="layui-hide-xs" th:text="${username}">贤心</cite>
           <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-          <i class="layui-badge fly-badge-vip layui-hide-xs">VIP3</i>
-          <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+          <i class="layui-badge fly-badge-vip layui-hide-xs" th:text="VIP+${grade_num}">VIP3</i>
+          <img th:src="${profile_photo}">
+          <!--<img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">-->
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="../user/set.html"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-          <dd><a href="../user/message.html"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-          <dd><a href="../user/home.html"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+          <dd><a th:href="@{'/html/user/set?address='+${address}}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+          <dd><a th:href="@{'/html/user/message?address='+${address}}"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+          <dd><a th:href="@{'/html/user/home?home_key='+${my_home_key}}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
           <hr style="margin: 5px 0;">
-          <dd><a href="" style="text-align: center;">退出</a></dd>
+          <dd><a th:href="@{/html/user/login}" style="text-align: center;">退出</a></dd>
         </dl>
       </li>
     </ul>
@@ -53,30 +48,37 @@
 <div class="layui-container fly-marginTop fly-user-main">
   <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/home}">
+      <a th:href="@{'/html/user/home?home_key='+${my_home_key}}">
         <i class="layui-icon">&#xe609;</i>
         我的主页
       </a>
     </li>
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/index}">
+      <a th:href="@{'/html/user/index?address='+${address}}">
         <i class="layui-icon">&#xe612;</i>
         用户中心
       </a>
     </li>
     <li class="layui-nav-item">
-      <a th:href="@{/html/user/set}">
+      <a th:href="@{'/html/user/post?address='+${address}}">
+        <i class="layui-icon">&#xe606;</i>
+        我的贴子
+      </a>
+    </li>
+    <li class="layui-nav-item">
+      <a th:href="@{'/html/user/set?address='+${address}}">
         <i class="layui-icon">&#xe620;</i>
         基本设置
       </a>
     </li>
-    <li class="layui-nav-item layui-this">
-      <a th:href="@{/html/user/message}">
+    <li class="layui-nav-item">
+      <a th:href="@{'/html/user/message?address='+${address}}">
         <i class="layui-icon">&#xe611;</i>
         我的消息
       </a>
     </li>
   </ul>
+
 
   <div class="site-tree-mobile layui-hide">
     <i class="layui-icon">&#xe602;</i>
@@ -92,21 +94,31 @@
   <div class="fly-panel fly-panel-user" pad20>
 	  <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
 	    <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
+        <span id="access_address" style="display:none" th:text="${address}"></span>
 	    <div  id="LAY_minemsg" style="margin-top: 10px;">
         <!--<div class="fly-none">您暂时没有最新消息</div>-->
-        <ul class="mine-msg">
-          <li data-id="123">
-            <blockquote class="layui-elem-quote">
-              <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>
+        <ul class="mine-msg" th:each="entries,stat:${messageList}">
+          <li th:data-id="${entries['id']}" th:switch="${entries['state']}">
+            <blockquote class="layui-elem-quote" th:case="0">
+              <a th:href="@{'/html/user/home?home_key='+${entries['home_key']}}" target="_blank"><cite th:text="${entries['reply_username']}">Absolutely</cite></a>回答了您的求解<a target="_blank" th:href="@{'/html/jie/detail?post_type='+${entries['post_type']}+'&address='+${address}}"><cite th:text="${entries['title']}">layui后台框架</cite></a>
             </blockquote>
-            <p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
-          </li>
-          <li data-id="123">
-            <blockquote class="layui-elem-quote">
-              系统消息：欢迎使用 layui
+            <blockquote class="layui-elem-quote" th:case="1">
+              <a th:href="@{'/html/user/home?home_key='+${entries['home_key']}}" target="_blank"><cite th:text="${entries['reply_username']}">Absolutely</cite></a>在求解<a target="_blank" th:href="@{'/html/jie/detail?post_type='+${entries['post_type']}+'&address='+${address}}"><cite th:text="${entries['title']}">layui后台框架</cite></a>中回复了你
             </blockquote>
-            <p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
+            <p><span th:text="${entries['add_time']}">1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
           </li>
+          <!--<li data-id="123">-->
+            <!--<blockquote class="layui-elem-quote">-->
+              <!--<a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>-->
+            <!--</blockquote>-->
+            <!--<p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>-->
+          <!--</li>-->
+          <!--<li data-id="123">-->
+            <!--<blockquote class="layui-elem-quote">-->
+              <!--系统消息：欢迎使用 layui-->
+            <!--</blockquote>-->
+            <!--<p><span>1小时前</span><a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>-->
+          <!--</li>-->
         </ul>
       </div>
 	  </div>
@@ -116,13 +128,14 @@
 
 
 <div class="fly-footer">
-  <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>
+  <p><a href="http://fly.layui.com/" target="_blank">智金网社区</a> 2019 &copy; <a href="http://www.layui.com/" target="_blank">zhijin.com 出品</a></p>
   <p>
     <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-    <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+    <a href="http://www.layui.com/template/fly/" target="_blank">智金网社区</a>
     <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
   </p>
 </div>
+
 
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
 <script>
