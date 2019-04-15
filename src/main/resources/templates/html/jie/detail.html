@@ -449,6 +449,7 @@
 
 
 <script th:src="@{/fly-3.0/res/layui/layui.js}"></script>
+<script th:src="@{/fly-3.0/res/mods/face.js}"></script>
 <script th:src="@{/js/base64.js}"></script>
 <script type="text/javascript" th:inline="javascript">
   layui.use(['form','layer','jquery','upload'],function () {
@@ -537,6 +538,13 @@ layui.config({
 }).use(['fly', 'face'], function(){
   var $ = layui.$
   ,fly = layui.fly;
+
+    //回帖
+    form.on("submit(post_reply)", function (data) {
+        $(this).text("回复中...").attr("disabled","disabled").addClass("layui-disabled");
+        fly.json();
+        return false;
+    });
   //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
   /*
   $('.detail-body').each(function(){

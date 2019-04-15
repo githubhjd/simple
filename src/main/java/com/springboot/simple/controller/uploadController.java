@@ -35,9 +35,9 @@ public class uploadController {
     //图片存放根路径
     private String rootPath = "D:";
     //图片存放根目录下的子目录
-    private String sonPath = "/IdeaProject/upload/";
+    private String sonPath = "/IdeaProject/simple_upload/";
     //获取图片链接
-    private String imgPath = "/upload/";
+    private String imgPath = "/simple_upload/";
 
     //上传图片接口
     @ResponseBody
