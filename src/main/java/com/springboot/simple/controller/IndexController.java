@@ -728,4 +728,9 @@ public class IndexController {
         modelMap.put("messageList", messageList);
         return "/html/user/message";
     }
+
+    @RequestMapping(value = "/webuploader")
+    public String webuploader(){
+        return "webuploader";
+    }
 }

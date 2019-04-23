@@ -45,7 +45,7 @@
     </select>
 
     <insert id="insertUser" parameterType="com.springboot.simple.domain.User">
-        INSERT INTO `user`(username,password,address,add_time,grade_num,grade_name) VALUE (#{username},#{password},#{address},#{add_time},#{grade_num},#{grade_name})
+        INSERT INTO `user`(username,password,address,add_time,grade_num,grade_name,day_state,create_time,update_time) VALUE (#{username},#{password},#{address},#{add_time},#{grade_num},#{grade_name},0,now(),now() )
     </insert>
 
     <update id="updateUser" parameterType="com.springboot.simple.domain.User">
